@@ -6,6 +6,12 @@ from dicts import *
 
 class DX(Endpoint):
 
+    def reboot(self):
+        xml = xml_dict['DX']['commands']['reboot']
+        headers = xml_dict['headers']
+        url = url_dict['post_xml'].replace('{{}}', self.ip)
+        self.session.post(url, xml, headers=headers)
+
     def disconnect_call(self):
         xml = xml_dict['commands']['disconnect']
         headers = xml_dict['headers']
