@@ -1,6 +1,7 @@
 from endpoint_dx import DX
 from endpoint_sx import SX
 from endpoint_shared import Endpoint
+import time
 from dicts import xml_dict, url_dict
 
 # todo setup a 'timeout' capability otherwise this thing will hang if the object isn't on the network
@@ -23,3 +24,36 @@ michael_cart = Endpoint('128.23.200.77', 'TTTVX@musc.edu')
 
 # for i in [richardsDX, davidsDX, ca300]:
 #     i.play_ringtone('a')
+
+def sound_bomb(targets, sound, sleep=0, loops=10):
+
+    if isinstance(targets, list):
+        for target in targets:
+            target.set_volume(100)
+            for i in range(loops):
+                target.play_sound(sound)
+                time.sleep(sleep)
+
+            target.stop_sound()
+            target.set_volume(50)
+
+def repeat_bomb():
+    # vol_dir = 'up'
+    # volume = 0
+    #
+    # while True:
+    #
+    #     if vol_dir == 'up':
+    #         volume += 50
+    #     else:
+    #         volume -= 50
+    richardsDX.play_sound('Ringing')
+    davidsDX.play_sound('Ringing')
+
+        #
+        # if volume == 100:
+        #     vol_dir = 'down'
+        # elif volume == 0:
+        #     vol_dir = 'up'
+
+

@@ -20,15 +20,15 @@ xml_dict = dict(
         ignore= '<Command><Call><Ignore><CallId></CallId></Ignore></Call></Command>',
         reject= '<Command><Call><Reject></Reject></Call></Command>',
         disconnect_all= '<Command><Call><DisconnectAll></DisconnectAll></Call></Command>',
-        play_ringtone='<Command><Audio><SoundsAndAlerts><Ringtone><Play><RingTone>{{}}</RingTone></Play></Ringtone></SoundsAndAlerts></Audio></Command>'
+        play_ringtone='<Command><Audio><SoundsAndAlerts><Ringtone><Play><RingTone>{{}}</RingTone></Play></Ringtone></SoundsAndAlerts></Audio></Command>',
+        play_sound='<Command><Audio><Sound><Play><Sound>{{}}</Sound></Play></Sound></Audio></Command>',
+        stop_sound='<Command><Audio><Sound><Stop></Stop></Sound></Audio></Command>',
+        set_volume='<Command><Audio><Volume><Set><Level>{{}}</Level></Set></Volume></Audio></Command>'
     ),
     configuration= dict(
         ring_volume='<Configuration><Audio><SoundsAndAlerts><RingVolume>{{}}</RingVolume></SoundsAndAlerts></Audio></Configuration>'
+
     ),
-    ringtones= dict(
-        a='Sunrise',
-        b='Mischief',
-    )
 )
 
 url_dict = dict(
