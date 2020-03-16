@@ -12,22 +12,35 @@ from direct_commands import *
 
 # todo -- need to find a way to get value from XML returned by using GET
 
-myDX = DX('10.27.200.140', '40100@cucm.musc.edu', password='')
-davidsDX = DX('128.23.200.189')
-# richardsDX = DX('128.23.200.158')
-# ca300 = SX('10.33.48.163', 'musc.ttt.ca30@musc.edu')
-# michael_cart = SX('128.23.200.77', 'TTTVX@musc.edu')
-# wendysDX = DX('128.23.200.16')
-# cth750 = SX('128.23.27.109', 'CenterForTelehealthCA750@musc.edu')
-# Pod1DX = DX('10.27.57.109', call_string='40163@cucm.musc.edu', name='MUSC POD 01')
-# MICU = DX('10.33.49.50', call_string='40161@cucm.musc.edu', name='MICU')
-# DX_7E_01 = DX('10.31.110.119', call_string='40159@cucm.musc.edu', name='DX 7-EAST-01')
-# DX_ART_01 = DX('10.33.80.108', call_string='40169@cucm.musc.edu', name='DX ART 01')
-# DX_MSICU_01 = DX('10.33.15.156', call_string='40160@cucm.musc.edu', name='DX-MSICU-01')
+def display_all_alerts(DXs):
+    for DX_ in DXs:
+        DX_.display_alert(get_COVID_alert(DX_), 'Information', 0)
 
-#
+
+def clear_all_alerts(DXs):
+    for DX_ in DXs:
+        DX_.display_alert('')
+
+# ca300 = SX('10.33.48.163')
+# michael_cart = SX('128.23.200.77')
+# cth750 = SX('128.23.27.109')
+
+# myDX = DX('10.27.200.140')
+# davidsDX = DX('128.23.200.189')
+# richardsDX = DX('128.23.200.158')
+# wendysDX = DX('128.23.200.16')
+
+# DX_TELEPOD_01 = DX('10.27.57.109')
+# DX_7E_01 = DX('10.31.110.119')
+# DX_ART_6WEST_01 = DX('10.33.80.108')
+# DX_MSICU_01 = DX('10.33.15.156')
+# DX_MICU_01 = DX('10.33.49.50')
+DX_TRIAGE_01 = DX('10.33.81.103')
+DX_TRIAGE_02 = DX('128.23.2.27')
+DX_TRIAGE_03 = DX('128.23.200.229')
+DX_TRIAGE_04 = DX('128.23.200.195')
+
+DXs = [DX_TRIAGE_01, DX_TRIAGE_02, DX_TRIAGE_03, DX_TRIAGE_04]
 # DXs = [Pod1DX, MICU, DX_7E_01, DX_ART_01, DX_MSICU_01]
-#
-# for DX_ in DXs:
-#     DX_.display_alert(get_COVID_alert(DX_), 'Information', 0)
+# DXs = [DX_TRIAGE_01, DX_TRIAGE_02, DX_TRIAGE_03, DX_TRIAGE_04]
 

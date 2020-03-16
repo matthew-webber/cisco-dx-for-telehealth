@@ -1,11 +1,14 @@
 from endpoint_shared import Endpoint
 from dicts import *
+import requests
 
 
 class SX(Endpoint):
     #
-    # def __init__(self):
-    #     super.__init__()
+    def __init__(self, ip):
+        super.__init__(ip=ip)
+        self.session = requests.session()
+        self.login()
 
     def disconnect_all_call(self):
         xml = xml_dict['commands']['disconnect_all']

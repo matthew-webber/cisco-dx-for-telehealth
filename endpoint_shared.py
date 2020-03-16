@@ -21,8 +21,19 @@ class Endpoint:
     #     if self.call_string: return self.call_string
     #     else: pass
 
+    def set_call_string(self, value):
+        self.call_string = value
+
+    def set_device_name(self, value):
+        self.name = value
+
+    def set_name(self, value):
+        self.name = value
+
     def login(self):
+        print(f'Trying {self.ip}...')
         self.session.post(url_dict['login'].replace('{{}}',self.ip), data=dict(username=self.user, password=self.password))
+        print(f'Logged in to {self.ip}!')
 
     def play_sound(self, sound):
         xml = xml_dict['commands']['play_sound'].replace('{{}}', sound)

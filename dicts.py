@@ -30,9 +30,9 @@ xml_dict = dict(
 
     ),
     status= dict(
-        ip_address='/Status/Network/IPv4/Address',
-        call_string='/Status/SIP/Registration/URI',
-        device_name='/Status/UserInterface/ContactInfo/Name',
+        ip_address='Status/Network/IPv4/Address',
+        call_string='Status/SIP/Registration/URI',
+        device_name='Status/UserInterface/ContactInfo/Name',
 
     ),
 )
@@ -42,3 +42,5 @@ url_dict = dict(
     post_xml='http://{{}}/putxml',
     get_xml='http://{{}}/getxml?location=',
 )
+
+# http://128.23.200.189/getxml?location=/Status/SIP/Registration/URI
