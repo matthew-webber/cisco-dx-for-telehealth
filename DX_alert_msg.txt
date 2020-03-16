@@ -1,0 +1,4 @@
+For IT help, call 2-5361,1
+Device Name: $name
+Call String: $call_string
+IP: $ip

@@ -29,9 +29,16 @@ xml_dict = dict(
         ring_volume='<Configuration><Audio><SoundsAndAlerts><RingVolume>{{}}</RingVolume></SoundsAndAlerts></Audio></Configuration>'
 
     ),
+    status= dict(
+        ip_address='/Status/Network/IPv4/Address',
+        call_string='/Status/SIP/Registration/URI',
+        device_name='/Status/UserInterface/ContactInfo/Name',
+
+    ),
 )
 
 url_dict = dict(
     login='http://{{}}/web/signin/open',
     post_xml='http://{{}}/putxml',
+    get_xml='http://{{}}/getxml?location=',
 )

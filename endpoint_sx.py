@@ -3,6 +3,9 @@ from dicts import *
 
 
 class SX(Endpoint):
+    #
+    # def __init__(self):
+    #     super.__init__()
 
     def disconnect_all_call(self):
         xml = xml_dict['commands']['disconnect_all']

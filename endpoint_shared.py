@@ -5,16 +5,21 @@ import time
 
 class Endpoint:
 
-    def __init__(self, ip='0.0.0.0', call_string="", user='admin', password='admin456', testing=False):
+    def __init__(self, ip='0.0.0.0', name="No name provided", call_string="", user='admin', password='admin456', testing=False):
         self.ip = ip
         self.call_string = call_string
         self.user = user
         self.password = password
         self.soundbank = SoundBank()
         self.ringtone = self.soundbank.get_ringtone()
+        self.name = name
         if not testing:
             self.session = requests.session()
             self.login()
+
+    # def __repr__(self):
+    #     if self.call_string: return self.call_string
+    #     else: pass
 
     def login(self):
         self.session.post(url_dict['login'].replace('{{}}',self.ip), data=dict(username=self.user, password=self.password))
@@ -49,7 +54,7 @@ class Endpoint:
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)
 
-    def ignore_call(self):
+    def end_call(self):
         xml = xml_dict['commands']['disconnect']
         headers = xml_dict['headers']
         url = url_dict['post_xml'].replace('{{}}', self.ip)
