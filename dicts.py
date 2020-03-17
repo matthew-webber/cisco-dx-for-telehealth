@@ -26,7 +26,9 @@ xml_dict = dict(
         set_volume='<Command><Audio><Volume><Set><Level>{{}}</Level></Set></Volume></Audio></Command>'
     ),
     configuration= dict(
-        ring_volume='<Configuration><Audio><SoundsAndAlerts><RingVolume>{{}}</RingVolume></SoundsAndAlerts></Audio></Configuration>'
+        ring_volume='<Configuration><Audio><SoundsAndAlerts><RingVolume>{{}}</RingVolume></SoundsAndAlerts></Audio></Configuration>',
+        external_manager='<Configuration><Provisioning><ExternalManager><Address>{{}}</Address></ExternalManager></Provisioning></Configuration>',
+        provisioning_mode='<Configuration><Provisioning><Mode>{{}}</Mode></Provisioning></Configuration>',
 
     ),
     status= dict(

@@ -8,8 +8,8 @@ from string import Template
 
 class DX(Endpoint):
 
-    def __init__(self, ip):
-        super().__init__(ip=ip)
+    def __init__(self, ip, password=""):
+        super().__init__(ip=ip, password=password)
         self.call_string = ''
         self.name = ''
         self.set_call_string(self.get_call_string())

@@ -21,11 +21,17 @@ def clear_all_alerts(DXs):
     for DX_ in DXs:
         DX_.display_alert('')
 
+def point_all_to_CUCM(DXs):
+    for DX_ in DXs:
+        DX_.set_external_manager_address('128.23.1.36')
+        DX_.set_provisioning_mode('CUCM')
+        DX_.reboot()
+
 # ca300 = SX('10.33.48.163')
 # michael_cart = SX('128.23.200.77')
 # cth750 = SX('128.23.27.109')
 
-# myDX = DX('10.27.200.140')
+# myDX = DX('10.27.200.140', password='')
 # davidsDX = DX('128.23.200.189')
 # richardsDX = DX('128.23.200.158')
 # wendysDX = DX('128.23.200.16')
@@ -35,12 +41,12 @@ def clear_all_alerts(DXs):
 # DX_ART_6WEST_01 = DX('10.33.80.108')
 # DX_MSICU_01 = DX('10.33.15.156')
 # DX_MICU_01 = DX('10.33.49.50')
-DX_TRIAGE_01 = DX('10.33.81.103')
-DX_TRIAGE_02 = DX('128.23.2.27')
-DX_TRIAGE_03 = DX('128.23.200.229')
-DX_TRIAGE_04 = DX('128.23.200.195')
+# DX_TRIAGE_01 = DX('10.33.81.103')
+# DX_TRIAGE_02 = DX('128.23.2.27')
+# DX_TRIAGE_03 = DX('128.23.200.229')
+# DX_TRIAGE_04 = DX('128.23.200.195')
 
-DXs = [DX_TRIAGE_01, DX_TRIAGE_02, DX_TRIAGE_03, DX_TRIAGE_04]
+# DXs = [DX_TRIAGE_01, DX_TRIAGE_02, DX_TRIAGE_03, DX_TRIAGE_04]
 # DXs = [Pod1DX, MICU, DX_7E_01, DX_ART_01, DX_MSICU_01]
 # DXs = [DX_TRIAGE_01, DX_TRIAGE_02, DX_TRIAGE_03, DX_TRIAGE_04]
 

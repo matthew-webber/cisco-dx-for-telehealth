@@ -65,6 +65,18 @@ class Endpoint:
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)
 
+    def set_external_manager_address(self, address):
+        xml = xml_dict['configuration']['external_manager'].replace('{{}}', str(address))
+        headers = xml_dict['headers']
+        url = url_dict['post_xml'].replace('{{}}', self.ip)
+        self.session.post(url, xml, headers=headers)
+
+    def set_provisioning_mode(self, mode):
+        xml = xml_dict['configuration']['provisioning_mode'].replace('{{}}', str(mode))
+        headers = xml_dict['headers']
+        url = url_dict['post_xml'].replace('{{}}', self.ip)
+        self.session.post(url, xml, headers=headers)
+
     def end_call(self):
         xml = xml_dict['commands']['disconnect']
         headers = xml_dict['headers']
