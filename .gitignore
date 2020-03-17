@@ -139,4 +139,6 @@ testing/
 venv*
 files/status_xml/*
 .idea/misc.xml
-
+todo.txt
+api_result.txt
+command0.txt

@@ -31,7 +31,7 @@ def point_all_to_CUCM(DXs):
 # michael_cart = SX('128.23.200.77')
 # cth750 = SX('128.23.27.109')
 
-# myDX = DX('10.27.200.140', password='')
+myDX = DX('10.27.200.140', password='')
 # davidsDX = DX('128.23.200.189')
 # richardsDX = DX('128.23.200.158')
 # wendysDX = DX('128.23.200.16')
