@@ -1,5 +1,6 @@
 import requests
 from dicts import *
+import xml.etree.ElementTree as ET
 import time
 
 
@@ -20,6 +21,39 @@ class Endpoint:
     # def __repr__(self):
     #     if self.call_string: return self.call_string
     #     else: pass
+
+    def add_contact(self, name, number, protocol='Auto', call_rate='0', call_type='Video', tag='Favorite', device='Video'):
+        xml = xml_dict['commands']['contact_add']
+        xml = xml.replace('$name', str(name))
+        xml = xml.replace('$number', str(number))
+        xml = xml.replace('$protocol', str(protocol))
+        xml = xml.replace('$call_rate', str(call_rate))
+        xml = xml.replace('$call_type', str(call_type))
+        xml = xml.replace('$device', str(device))
+        xml = xml.replace('$tag', str(tag))
+        headers = xml_dict['headers']
+        url = url_dict['post_xml'].replace('{{}}', self.ip)
+        self.session.post(url, xml, headers=headers)
+
+    def delete_contact(self, contact_id):
+        xml = xml_dict['commands']['contact_delete']
+        xml = xml.replace('$contact_id', str(contact_id))
+        headers = xml_dict['headers']
+        url = url_dict['post_xml'].replace('{{}}', self.ip)
+        self.session.post(url, xml, headers=headers)
+
+    def phonebook_search(self, search_str, contact_type='Any', limit='100'):
+        xml = xml_dict['commands']['phonebook_search']
+        xml = xml.replace('$search_str', str(search_str))
+        xml = xml.replace('$contact_type', str(contact_type))
+        xml = xml.replace('$limit', str(limit))
+        headers = xml_dict['headers']
+        url = url_dict['post_xml'].replace('{{}}', self.ip)
+        response = self.session.post(url, xml, headers=headers)
+        # parse xml move this later
+        root = ET.fromstring(response.text)
+        contacts_list = root[0].findall('Contact')
+        return contacts_list
 
     def set_call_string(self, value):
         self.call_string = value
@@ -174,6 +208,7 @@ class SoundBank:
             'WakeUp',
         ]
         return sounds
+
 
 if __name__ == '__main__':
     thisthat = SoundBank()

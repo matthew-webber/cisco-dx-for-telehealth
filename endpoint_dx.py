@@ -8,7 +8,7 @@ from string import Template
 
 class DX(Endpoint):
 
-    def __init__(self, ip, password=""):
+    def __init__(self, ip, password="admin456"):
         super().__init__(ip=ip, password=password)
         self.call_string = ''
         self.name = ''
@@ -52,7 +52,6 @@ class DX(Endpoint):
         xml = xml.replace('$1', str(duration))
         xml = xml.replace('$2', text)
         xml = xml.replace('$3', title)
-        print(xml)
         headers = xml_dict['headers']
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)

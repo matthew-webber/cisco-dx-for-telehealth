@@ -5,8 +5,8 @@ import requests
 
 class SX(Endpoint):
     #
-    def __init__(self, ip):
-        super.__init__(ip=ip)
+    def __init__(self, ip, password='admin456'):
+        super().__init__(ip=ip, password=password)
         self.session = requests.session()
         self.login()
 
