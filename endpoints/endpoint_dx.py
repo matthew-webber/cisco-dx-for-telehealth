@@ -1,9 +1,21 @@
-import requests
-import time
-from endpoint_shared import Endpoint
+from endpoints.endpoint_shared import Endpoint
 from dicts import *
 import xml.etree.ElementTree as ET
-from string import Template
+
+
+# DX cluster class
+
+class DXCluster:
+
+    _clusters = []
+
+    def __init__(self, dx: object, name: str):
+        self.name = name
+        self.dxs = [dx]
+        self._clusters.append(self)
+
+    def add_dx(self, dx):
+        self.dxs.append(dx)
 
 
 class DX(Endpoint):
@@ -31,6 +43,8 @@ class DX(Endpoint):
         headers = xml_dict['headers']
         url = url_dict['get_xml'].replace('{{}}', self.ip) + URL_suffix
         response = self.session.get(url, headers=headers)
+        while response.status_code == 401:
+            response = self.session.get(url, headers=headers)
         # now parse the response -- this needs to go elsewhere
         root = ET.fromstring(response.text)
         return root[0][0][0].text
@@ -75,9 +89,6 @@ class DX(Endpoint):
 
 if __name__ == "__main__":
 
-    davidsDX = DX('128.23.200.189')
+    myDX = DX('10.27.200.140')
 
-    call_string = davidsDX.get_device_name()
-
-
-
+    call_string = myDX.get_device_name()

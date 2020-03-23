@@ -1,5 +1,4 @@
-from endpoint_dx import DX
-from endpoint_sx import SX
+from endpoints.endpoint_dx import DX
 from direct_commands import *
 
 #todo

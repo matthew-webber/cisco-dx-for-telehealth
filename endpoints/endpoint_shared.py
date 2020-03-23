@@ -1,10 +1,16 @@
 import requests
 from dicts import *
 import xml.etree.ElementTree as ET
+import testing.login as login_test
 import time
 
 
 class Endpoint:
+
+    test_login = dict(
+        url=xml_dict['status']['device_name'],
+        headers=xml_dict['headers'],
+    )
 
     def __init__(self, ip='0.0.0.0', name="No name provided", call_string="", user='admin', password='admin456', testing=False):
         self.ip = ip
@@ -67,6 +73,17 @@ class Endpoint:
     def login(self):
         print(f'Trying {self.ip}...')
         self.session.post(url_dict['login'].replace('{{}}',self.ip), data=dict(username=self.user, password=self.password))
+        # check if login was successful
+        url = url_dict['get_xml'].replace('{{}}', self.ip) + Endpoint.test_login['url']
+        response = self.session.get(url, headers=Endpoint.test_login['headers'])
+        while response.status_code == 401:
+            # self
+            # response
+            new_pw = input('Invalid password.  Try again.\n')
+            self.password = new_pw
+            self.session.post(url_dict['login'].replace('{{}}',self.ip), data=dict(username=self.user, password=self.password))
+            response = self.session.get(url, headers=Endpoint.test_login['headers'])
+
         print(f'Logged in to {self.ip}!')
 
     def play_sound(self, sound):

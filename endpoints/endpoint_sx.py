@@ -1,4 +1,4 @@
-from endpoint_shared import Endpoint
+from endpoints.endpoint_shared import Endpoint
 from dicts import *
 import requests
 
