@@ -45,6 +45,10 @@ class DX(Endpoint):
         response = self.session.get(url, headers=headers)
         while response.status_code == 401:
             response = self.session.get(url, headers=headers)
+        #     SessionTester(session, url, headers) -->
+        #     return session
+        #       while SessionTester not True: continue, else: input("New pw")
+        #       if input == "q!", quit, else session = SessionUpdater(pw)
         # now parse the response -- this needs to go elsewhere
         root = ET.fromstring(response.text)
         return root[0][0][0].text

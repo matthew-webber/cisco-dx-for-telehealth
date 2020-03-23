@@ -134,7 +134,6 @@ dmypy.json
 
 # other
 creds.py
-testing/
 .DS_Store
 venv*
 files/status_xml/*
