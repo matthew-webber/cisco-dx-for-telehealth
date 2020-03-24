@@ -1,30 +1,46 @@
+from dicts import xml_dict
+
+
 class SessionTester:
 
     fail_codes = [400, 401]
 
-    @staticmethod
-    def test_session(session, test_type=0, url, headers=""):
-        # self.response = response
-        # self.status = None
-        # self.test_session()
-        data = dict(
-            session=session,
-            url=url,
-            headers=headers,
-        )
-        response = SessionTester.test_session(data)
-        result = SessionTester.check_response(response)
+    def __init__(self, session, url, headers=""):
+        self.session = session
+        self.url = url
+        self.headers = headers
+        self._test_pass = None
 
+    @property
+    def test_pass(self):
+        return self._test_pass
+
+    @test_pass.setter
+    def test_pass(self, result):
+        self._test_pass = result
+
+    def test_session(self):
+
+        data = dict(
+            session=self.session,
+            url=self.url,
+            headers=self.headers,
+        )
+
+        response = self.get_url(data)
+        result = self.check_response(response)
+
+        self.test_pass = result
 
         # tester = SessionTester.get_tester(test_type)
         # return SessionTester.test_session(tester)
 
     @staticmethod
     def check_response(response):
-        if response.status_code in SessionTester.fail_codes
+        return response.status_code not in SessionTester.fail_codes
 
     @staticmethod
-    def test_session(data):
+    def get_url(data):
         return data['session'].get(data['url'], headers=data['headers'])
 
         #
@@ -61,14 +77,20 @@ class SessionUpdater:
 
 
 if __name__ == "__main__":
+    pass
+    # from collections import namedtuple
+    #
+    # Session = namedtuple('TestSession', 'pw')
+    # Response = namedtuple('TestResponse', 'status_code')
+    #
+    # test_session = Session(pw='password')
+    # test_response = Response(status_code=401)
 
-    from collections import namedtuple
 
-    Session = namedtuple('TestSession', 'pw')
-    Response = namedtuple('TestResponse', 'status_code')
+    # myDX = Endpoint('10.27.200.140')  # myDX
 
-    test_session = Session(pw='password')
-    test_response = Response(status_code=401)
-
-    thisthat = SessionTester(test_session, test_response)
+    # test = dict(
+    #     url=xml_dict['status']['device_name'].replace('{{}}', myDX.ip),
+    #     headers=xml_dict['headers'],
+    # )
 
