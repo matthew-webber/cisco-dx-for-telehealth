@@ -13,6 +13,15 @@ def get_COVID_alert(DX_obj, alert_txt_file="DX_alert_msg.txt"):
 
     return alert
 
+def echo_bomb(target, attacker):
+    attacker.call(target.call_string)
+    time.sleep(6)
+    attacker.call(target.call_string)
+    time.sleep(3)
+    target.accept_call()
+    time.sleep(3)
+    target.delete_callhistory()
+
 
 # r = requests.session()
 # r2 = requests.session()

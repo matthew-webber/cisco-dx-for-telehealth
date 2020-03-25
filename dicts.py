@@ -15,6 +15,7 @@ xml_dict = dict(
     ),
     commands= dict(
         call= '<Command><Dial><Number>{{}}</Number></Dial></Command>',
+        delete_callhistory= '<Command><CallHistory><DeleteAll><Filter>All</Filter></DeleteAll></CallHistory></Command>',
         disconnect= '<Command><Call><Disconnect></Disconnect></Call></Command>',
         accept= '<Command><Call><Accept></Accept></Call></Command>',
         ignore= '<Command><Call><Ignore><CallId></CallId></Ignore></Call></Command>',
@@ -24,7 +25,8 @@ xml_dict = dict(
         play_sound='<Command><Audio><Sound><Play><Sound>{{}}</Sound></Play></Sound></Audio></Command>',
         stop_sound='<Command><Audio><Sound><Stop></Stop></Sound></Audio></Command>',
         set_volume='<Command><Audio><Volume><Set><Level>{{}}</Level></Set></Volume></Audio></Command>',
-        phonebook_search='<Command><Phonebook><Search><ContactType>$contact_type</ContactType><Recursive>True</Recursive><Limit>$limit</Limit><Offset>0</Offset><SearchString>$search_str</SearchString><PhonebookType>Local</PhonebookType><PhonebookId></PhonebookId></Search></Phonebook></Command>',
+        # phonebook_search='<Command><Phonebook><Search><ContactType>$contact_type</ContactType><Recursive>True</Recursive><Limit>$limit</Limit><Offset>0</Offset><SearchString>$search_str</SearchString><PhonebookType>Local</PhonebookType><PhonebookId></PhonebookId></Search></Phonebook></Command>',
+        phonebook_search='<Command><Phonebook><Search><ContactType>$contact_type</ContactType><Recursive>True</Recursive><Limit>$limit</Limit><Offset>0</Offset><PhonebookType>Local</PhonebookType><PhonebookId></PhonebookId></Search></Phonebook></Command>',
         contact_add='<Command><Phonebook><Contact><Add><Tag>$tag</Tag><Device>$device</Device><CallType>$call_type</CallType><CallRate>$call_rate</CallRate><Protocol>$protocol</Protocol><Number>$number</Number><Title></Title><ImageURL></ImageURL><FolderId></FolderId><Name>$name</Name></Add></Contact></Phonebook></Command>',
         contact_delete='<Command><Phonebook><Contact><Delete><ContactId>$contact_id</ContactId></Delete></Contact></Phonebook></Command>',
     ),
@@ -48,3 +50,5 @@ url_dict = dict(
 )
 
 # http://128.23.200.189/getxml?location=/Status/SIP/Registration/URI
+
+#

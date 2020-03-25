@@ -48,9 +48,15 @@ class Endpoint:
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)
 
+    def delete_callhistory(self):
+        xml = xml_dict['commands']['delete_callhistory']
+        headers = xml_dict['headers']
+        url = url_dict['post_xml'].replace('{{}}', self.ip)
+        self.session.post(url, xml, headers=headers)
+
     def phonebook_search(self, search_str, contact_type='Any', limit='100'):
         xml = xml_dict['commands']['phonebook_search']
-        xml = xml.replace('$search_str', str(search_str))
+        # xml = xml.replace('$search_str', str(search_str))
         xml = xml.replace('$contact_type', str(contact_type))
         xml = xml.replace('$limit', str(limit))
         headers = xml_dict['headers']
