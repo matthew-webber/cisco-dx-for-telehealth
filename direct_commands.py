@@ -2,7 +2,7 @@ import time
 from string import Template
 
 
-def get_COVID_alert(DX_obj, alert_txt_file="DX_alert_msg.txt"):
+def get_COVID_alert(DX_obj, alert_txt_file="/Users/webber/PycharmProjects/cisco_API/DX_alert_msg.txt"):
     with open(alert_txt_file, "r") as f:
         dx_alert = f.read()
 

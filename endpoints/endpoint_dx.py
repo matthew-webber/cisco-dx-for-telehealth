@@ -1,6 +1,7 @@
 from endpoints.endpoint_shared import Endpoint
 from dicts import *
 import xml.etree.ElementTree as ET
+from direct_commands import *
 
 
 # DX cluster class
@@ -74,6 +75,9 @@ class DX(Endpoint):
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)
 
+    def display_covid_alert(self,):
+        self.display_alert(get_COVID_alert(self), "Information", 0)
+
     def display_prompt(self, text, options: list, feedbackid='', title=''):
         xml = xml_dict['userinterface']['prompt']
         xml = xml.replace('$text', text)
@@ -93,6 +97,10 @@ class DX(Endpoint):
 
 if __name__ == "__main__":
 
-    myDX = DX('10.27.200.140')
+    myDX = DX('10.27.200.140', password='')
 
     call_string = myDX.get_device_name()
+
+
+
+
