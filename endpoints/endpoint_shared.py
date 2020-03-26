@@ -65,10 +65,10 @@ class Endpoint:
         response = self.session.post(url, xml, headers=headers)
         # parse xml move this later
         root = ET.fromstring(response.text)
-        contacts_list = root[0].findall('Contact')
-        return contacts_list
+        contact_names = [child.find("Name").text for child in root[0] if child.tag == "Contact"]
+        return contact_names
 
-    def
+    # def
 
     def set_call_string(self, value):
         self.call_string = value
@@ -237,5 +237,5 @@ class SoundBank:
 
 
 if __name__ == '__main__':
-    thisthat = SoundBank()
-    foo = Endpoint(testing=True)
+    a = Endpoint('10.27.200.140', password='')
+    b = a.phonebook_search()
