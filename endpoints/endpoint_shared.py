@@ -65,7 +65,8 @@ class Endpoint:
         response = self.session.post(url, xml, headers=headers)
         # parse xml move this later
         root = ET.fromstring(response.text)
-        contact_names = [child.find("Name").text for child in root[0] if child.tag == "Contact"]
+        contact_names = root[0].findall("Contact")
+        # contact_names = [child.find("Name").text for child in root[0] if child.tag == "Contact"]
         return contact_names
 
     # def
