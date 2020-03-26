@@ -41,6 +41,10 @@ class Endpoint:
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)
 
+    def add_all_favorites(self, favorites):
+        for favorite in favorites:
+            self.add_contact(favorite.name, favorite.call_string)
+
     def delete_contact(self, contact_id):
         xml = xml_dict['commands']['contact_delete']
         xml = xml.replace('$contact_id', str(contact_id))
@@ -69,7 +73,10 @@ class Endpoint:
         # contact_names = [child.find("Name").text for child in root[0] if child.tag == "Contact"]
         return contact_names
 
-    # def
+    def delete_all_contacts(self):
+        contacts_list = self.phonebook_search()
+        for contact in contacts_list:
+            self.delete_contact(contact.find('ContactId').text)
 
     def set_call_string(self, value):
         self.call_string = value
@@ -239,4 +246,3 @@ class SoundBank:
 
 if __name__ == '__main__':
     a = Endpoint('10.27.200.140', password='')
-    b = a.phonebook_search()
