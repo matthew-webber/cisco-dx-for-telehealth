@@ -33,36 +33,36 @@ def point_all_to_CUCM(DXs):
         DX_.set_provisioning_mode('CUCM')
         DX_.reboot()
 
-ca300 = SX(ip='10.33.48.163', password='admin456')
-michael_cart = SX('128.23.200.77')
-cth750 = SX('128.23.27.109')
-ttt750 = SX('10.33.108.74')
+# ca300 = SX(ip='10.33.48.163', password='admin456')
+# michael_cart = SX('128.23.200.77')
+# cth750 = SX('128.23.27.109')
+# ttt750 = SX('10.33.108.74')
 
 myDX = DX('10.27.200.140', password='')
 
-davidsDX = DX('128.23.200.189')
-richardsDX = DX('128.23.200.158')
-wendysDX = DX('128.23.200.16')
+# davidsDX = DX('128.23.200.189')
+# richardsDX = DX('128.23.200.158')
+# wendysDX = DX('128.23.200.16')
 
 
-# # update group 1
+# # # update group 1
 # DX_TELEPOD_01 = DX('10.33.114.35')
-#
-# # update group 2
+# #
+# # # update group 2
 # DX_7E = DX('10.33.110.119')
 # DX_ART_6WEST_01 = DX('10.33.80.108')
 # DX_MSICU_01 = DX('10.33.15.156')
 # DX_MICU_01 = DX('10.33.49.50')
 # DX_MAIN_10W = DX('10.33.72.81')
-#
-# # update group 3
+# #
+# # # update group 3
 # DX_STATION_01 = DX('10.33.46.85')
 # DX_STATION_02 = DX('10.33.112.74')
 #
 # # DX_MAIN_6W = DX('128.23.200.63')  # offline
 #
 # # # favorites 1
-# # CART_02 = DX('10.33.9.189')
+# CART_02 = DX('10.33.9.189')
 # CART_04 = DX('10.33.111.118')
 # CART_11 = DX('10.33.102.191')
 # CART_12 = DX('10.33.1.119')
