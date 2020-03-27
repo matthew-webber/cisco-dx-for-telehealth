@@ -77,6 +77,7 @@ class DX(Endpoint):
 
     def display_covid_alert(self, path):
         self.display_alert(get_COVID_alert(self, alert_txt_file=path), "Information", 0)
+        print(f'{self.name} - alert displayed!')
 
     def display_prompt(self, text, options: list, feedbackid='', title=''):
         xml = xml_dict['userinterface']['prompt']
@@ -94,6 +95,7 @@ class DX(Endpoint):
         headers = xml_dict['headers']
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)
+
 
 if __name__ == "__main__":
 

@@ -44,6 +44,7 @@ class Endpoint:
     def add_all_favorites(self, favorites):
         for favorite in favorites:
             self.add_contact(favorite.name, favorite.call_string)
+        print(f'{self.name} - favorites added!')
 
     def delete_contact(self, contact_id):
         xml = xml_dict['commands']['contact_delete']
@@ -57,6 +58,7 @@ class Endpoint:
         headers = xml_dict['headers']
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)
+        print(f'{self.name} - call history deleted!')
 
     def phonebook_search(self, search_str="", contact_type='Any', limit='100'):
         xml = xml_dict['commands']['phonebook_search']
@@ -77,6 +79,7 @@ class Endpoint:
         contacts_list = self.phonebook_search()
         for contact in contacts_list:
             self.delete_contact(contact.find('ContactId').text)
+        print(f'{self.name} - contacts deleted!')
 
     def set_call_string(self, value):
         self.call_string = value
