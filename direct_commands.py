@@ -34,15 +34,17 @@ def echo_bomb(target, attacker):
 
 def sound_bomb(targets, sound, sleep=0, loops=10):
 
-    if isinstance(targets, list):
-        for target in targets:
-            target.set_volume(100)
-            for i in range(loops):
-                target.play_sound(sound)
-                time.sleep(sleep)
+    if not isinstance(targets, list):
+        targets = [targets]
 
-            target.stop_sound()
-            target.set_volume(50)
+    for target in targets:
+        target.set_volume(100)
+        for i in range(loops):
+            target.play_sound(sound)
+            time.sleep(sleep)
+
+        target.stop_sound()
+        target.set_volume(50)
 
 # def repeat_bomb():
 #     # vol_dir = 'up'

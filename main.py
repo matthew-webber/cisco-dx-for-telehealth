@@ -51,26 +51,26 @@ myDX = DX('10.27.200.140', password='')
 
 # # update group 1
 DX_TELEPOD_01 = DX('10.33.114.35')
-#
+
 # # update group 2
+
 DX_7E = DX('10.33.110.119')
-DX_ART_6WEST_01 = DX('10.33.80.108')
 DX_ART_5E = DX('10.33.112.74')
 DX_ART_5W = DX('10.33.69.192')  # ex DX Patient 3
-DX_MSICU_01 = DX('10.33.15.156')
-DX_MICU_01 = DX('10.33.49.50')
+DX_ART_6W_01 = DX('10.33.80.108')
 DX_MAIN_10W = DX('10.33.72.81')
+DX_MAIN_6E = DX('10.33.58.244')
+DX_MAIN_6W = DX('10.33.20.6')  # ex DX Patient 4
+DX_MICU_01 = DX('10.33.49.50')
+DX_MSICU_01 = DX('10.33.15.156')
 
-# DX_XX_02 = DX('10.33.20.6')  # ex DX Patient 4
 # DX_XX_03 = DX('10.33.18.168')  # ex DX Patient 8
 
 # # update group 3
-# DX_STATION_01 = DX('10.33.46.85')
-#
-# # DX_MAIN_6W = DX('128.23.200.63')  # offline
+DX_STATION_01 = DX('10.33.46.85')
 
 update_group_01 = [DX_TELEPOD_01]
-update_group_02 = [DX_7E, DX_ART_6WEST_01, DX_MSICU_01, DX_MICU_01, DX_MAIN_10W, DX_ART_5E, DX_ART_5W]
+update_group_02 = [DX_7E, DX_ART_5E, DX_ART_5W, DX_ART_6W_01, DX_MAIN_10W, DX_MAIN_6E, DX_MAIN_6W, DX_MICU_01, DX_MSICU_01]
 
 # update_group_03 = [DX_STATION_01, DX_STATION_02]
 
@@ -80,7 +80,7 @@ update_group_02 = [DX_7E, DX_ART_6WEST_01, DX_MSICU_01, DX_MICU_01, DX_MAIN_10W,
 # CART_02 = DummyDX('10.33.9.189', 'MONA-VPO-CART-02', '11002@cucm.musc.edu')  # offline 12:34 3/26
 CART_02 = DX('10.33.9.189')
 CART_03 = DX('10.33.10.144')
-CART_04 = DX('10.33.111.118')
+CART_04 = DummyDX('10.33.111.118', 'MONA-VPO-CART-04', '11002@cucm.musc.edu')
 CART_07 = DX('10.33.107.22')
 CART_11 = DX('10.33.102.191')
 CART_12 = DX('10.33.1.119')
@@ -96,12 +96,13 @@ patientDX5 = DX('10.33.81.103')
 patientDX6 = DX('10.33.100.145')
 patientDX7 = DX('10.33.120.174')
 patientDX9 = DX('10.33.1.143')
-patientDX10 = DX('10.33.27.113')
-patientDX11 = DX('10.33.31.227')
+# patientDX10 = DX('10.33.27.113')
+# patientDX11 = DX('10.33.31.227')
 patientDX12 = DX('10.33.45.139')
 #
 carts_only = [CART_02, CART_03, CART_04, CART_07, CART_11, CART_12, CART_13, CART_14, CART_19, CART_20]
-all_pt_endpoints = carts_only + [patientDX1, patientDX2, patientDX5, patientDX6, patientDX7, patientDX9, patientDX10, patientDX11, patientDX12]
+all_pt_endpoints = carts_only + [patientDX1, patientDX2, patientDX5, patientDX6, patientDX7, patientDX9, patientDX12]
+patient_DXs = [patientDX1, patientDX2, patientDX5, patientDX6, patientDX7, patientDX9, patientDX12]
 
 # DX_TRIAGE_01 = DX('10.33.81.103')
 # DX_TRIAGE_02 = DX('128.23.2.27')
@@ -118,7 +119,7 @@ pspn_vidyo = '102007@vidyo.pspnsc.org'
 
 DX_TELEPOD_01.delete_all_contacts()
 DX_TELEPOD_01.add_all_favorites(favorites=all_pt_endpoints)
-DX_TELEPOD_01.display_covid_alert()
+DX_TELEPOD_01.display_covid_alert(path='/Users/webber/PycharmProjects/cisco_API/DX_alert_msg.txt')
 
 for dx_ in update_group_02:
     dx_.delete_all_contacts()
