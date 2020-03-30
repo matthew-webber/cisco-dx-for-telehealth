@@ -39,8 +39,9 @@ xml_dict = dict(
         ip_address='Status/Network/IPv4/Address',
         call_string='Status/SIP/Registration/URI',
         device_name='Status/UserInterface/ContactInfo/Name',
-
     ),
+    # todo with the GET commands, should I grab the whole document instead of making multiple calls to specific endpoints?
+    # todo api_call class if parent == status, return "Status/" + child
 )
 
 url_dict = dict(

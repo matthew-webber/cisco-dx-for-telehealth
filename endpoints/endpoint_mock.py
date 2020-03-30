@@ -13,20 +13,21 @@ class TestEndpointMock:
         print(f'Success!')
 
 
+if __name__ == '__main__':
 
-import csv
+    import csv
 
-x = list()
+    x = list()
 
-# the below can take the contents of a csv file and put each row as a dict into a list of dicts
-# the dict can then be used to create an object
+    # the below can take the contents of a csv file and put each row as a dict into a list of dicts
+    # the dict can then be used to create an object
 
-with open('../thisthat.csv', newline='') as f:
-    reader = csv.reader(f)
-    # dynamic mapping of values + headers
-    headers = [header for header in next(reader)]
-    for row in reader:
-        x.append({headers[i]: row[i] for i, val in enumerate(row)})
+    with open('../thisthat.csv', newline='') as f:
+        reader = csv.reader(f)
+        # dynamic mapping of values + headers
+        headers = [header for header in next(reader)]
+        for row in reader:
+            x.append({headers[i]: row[i] for i, val in enumerate(row)})
 
-for i in x:
-    thisthat = TestEndpointMock(ip=i['ip'], name=i['name'], call_string=i['call_string'], type_=i['type_'], role=i['role'], status=i['status'])
+    for i in x:
+        thisthat = TestEndpointMock(ip=i['ip'], name=i['name'], call_string=i['call_string'], type_=i['type_'], role=i['role'], status=i['status'])
