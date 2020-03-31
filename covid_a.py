@@ -2,6 +2,8 @@ from endpoints.endpoint_mock import TestEndpointMock
 import requests
 import xml.etree.ElementTree as ET
 from creds import endpoint_data
+from endpoints.endpoint_dx import DX
+from endpoints.endpoint_sx import SX
 
 
 class Cluster:
@@ -17,19 +19,60 @@ class Cluster:
     def role(self, role):
         self._role = role
 
+class XmlProcessor:
+
+    pass
+
 
 class EndpointFactory:
 
-    def __init__(self, data, ip, status='Online'):
-        # configure the dict items from the creds.py
+    def __init__(self, queue):
+        self.queue = queue
+
+    @staticmethod
+    def create(data, ip, status='Online'):
+        """
+        Create a session, grab the status.xml, and then create an endpoint with attached session and XML data
+        :param data: dict of endpoint data
+        :param ip: endpoint IPv4 address
+        :param status: Online/Offline string
+        :return:
+        """
+        # grab a session using data added to method
         data['login_url'] = data['login_url'].replace('$ip', ip)
         data['test_url'] = data['test_url'].replace('$ip', ip)
-        session = SessionModule.create_session(login_data=data)
+        session = EndpointFactory.add_session(data)
+
+        # get product platform to determine what type of endpoint to make
+        root = ET.fromstring(session.get(f'http://{ip}/getxml?location=Status').text)
+        endpoint_model = EndpointFactory.get_status("ProductPlatform", root)
+
+        generator = EndpointFactory._get_generator(endpoint_model)
+
         # self.make_endpoint()
 
-    def factory(self):
-        pass
+    @staticmethod
+    def add_session(data):
+        return SessionModule.create_session(login_data=data)
 
+    @staticmethod
+    def _get_generator(endpoint_model):
+        if endpoint_model in ['DX70', 'DX80']:
+            return EndpointFactory._make_DX
+        elif endpoint_model in ['SX20']:
+            return EndpointFactory._make_SX
+        else:
+            return ValueError(endpoint_model)
+
+    @staticmethod
+    def _make_DX(session, status_xml):
+        return DX()
+
+    @staticmethod
+    def _make_SX(session, status_xml):
+        return SX()
+
+    @staticmethod
     def get_status(target, xml):
         return [tag.text for tag in xml.iter(target)][0]
 
