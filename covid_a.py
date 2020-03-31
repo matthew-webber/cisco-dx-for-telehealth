@@ -1,7 +1,8 @@
 from endpoints.endpoint_mock import TestEndpointMock
 import requests
 import xml.etree.ElementTree as ET
-from creds import endpoint_credentials
+from creds import endpoint_data
+
 
 class Cluster:
 
@@ -16,143 +17,178 @@ class Cluster:
     def role(self, role):
         self._role = role
 
-    class EndpointFactory:
 
-        def __init__(self, data):
-            # determine object model
-            self.session = SessionModule(data={'url': endpoint_data.get('login_url'), 'ip': ip})
+class EndpointFactory:
 
-        def factory(self):
-            pass
+    def __init__(self, data, ip, status='Online'):
+        # configure the dict items from the creds.py
+        data['login_url'] = data['login_url'].replace('$ip', ip)
+        data['test_url'] = data['test_url'].replace('$ip', ip)
+        session = SessionModule.create_session(login_data=data)
+        # self.make_endpoint()
 
-        def get_status(target, xml):
-            return [tag.text for tag in xml.iter(target)][0]
+    def factory(self):
+        pass
 
-    class DX2:
+    def get_status(target, xml):
+        return [tag.text for tag in xml.iter(target)][0]
 
 
-        def refresh_status(self):
-            pass
+class Endpoint:
 
-    class AuthSession:
+    def __init__(self):
+        pass
 
-        def __init__(self, session, credentials):
-            self._secure = False
-            self.credentials = credentials
-            self.user, self.password = credentials.get('username')[:], credentials.get('password')[:]
 
-            if session:
-                self._session = session
-            else:
-                self._session = RegSession.session
+class SessionModule:
 
-        def secure(self, data_fetcher):
-            for user in self.user:
-                for pw in self.password:
-                    response = data_fetcher.login(user, pw)
-                    while response.code == 401:
-                        response = data_fetcher.login(user, pw)
-                        print(f'Logged in failed with {user}:{pw}')
+    @staticmethod
+    def create_session(login_data=None, session=None, start_session: bool = True, start_auth_session: bool = True):
 
-                    print(f'Logged in success with {user}:{pw}')
-                    self.user = user
-                    self.password = pw
+        session_generator = SessionModule.get_session
+        session = session_generator(session=session, login_data=login_data)
+        return session
 
-    class RegSession:
+    @staticmethod
+    def get_session(session, login_data):
 
-        def __init__(self):
-            self._session = requests.session()
+        if session and login_data:
+            # authorize current session
+            return AuthSession(credentials=login_data['credentials'],
+                               login_url=login_data['login_url'],
+                               test_url=login_data['test_url']).session
+        elif login_data:
+            # create new auth session
+            return AuthSession(credentials=login_data['credentials'],
+                               login_url=login_data['login_url'],
+                               test_url=login_data['test_url']).session
+        else:
+            # create new non-auth session
+            return RegSession
 
-        @property
-        def session(self):
+    def session_generator(self):
+        pass
+
+    def make_authsession(self):
+        pass
+
+    def make_regsession(self):
+        pass
+
+    def apply_credentials(self):
+        pass
+
+    def init_session(self):
+
+        # if there's not already a session, start one
+        if not self._session:
+            print('Creating session object...')
+            return requests.Session()
+        else:
+            print('Session object already exists.')
             return self._session
 
-    class SessionModule:
+    def init_auth_session(self):
 
-        def __init__(self, credentials=None, session=None, start_session: bool = True, start_auth_session: bool = True):
-            self.data_fetcher = DataFetcher()
+        auth_session = self.init_session()
+        print('Session ready for credentials')
 
-            session_generator = SessionModule.get_session
-            self._session = self.session_generator(session, credentials)
-            self.response = None
-            self._credentials = endpoint_credentials
+        return auth_session
 
-            if start_auth_session:
-                self._session = self.init_auth_session()
-                print('Authenticated session ready.')
-            elif start_session:
-                self._session = self.init_session()
-                print('Regular session ready.')
+    def update_data(self, target, login_url=None):
+        self.response = self.data_fetcher.fetch_data(target=target, login_url=login_url)  # todo refactor to 'renew_data_fetcher' and 'update_data'
 
-        def get_session(self, session, credentials):
 
-            if session and credentials:
-                # authorize current session
-                return AuthSession(session, credentials)
-            elif credentials:
-                # create AuthSession
-                pass
-            else:
-            #     create regular Session
-                pass
+class AuthSession:
 
-        def session_generator(self):
-            pass
+    def __init__(self, credentials, login_url, test_url, session=None):
+        self._secure = False
+        self.session = session
+        self._data_fetcher = DataFetcher(login_url=login_url, url=test_url)
+        self.credentials = credentials
+        self.user, self.password = None, None
 
-        def make_authsession(self):
-            pass
+        if not self.session:
+            self.session = RegSession.session()
 
-        def make_regsession(self):
-            pass
+        self.secure()
 
-        def apply_credentials(self):
-            pass
+    def secure(self):
+        # self._data_fetcher.login(self.session)  # start session
+        for user in self.credentials.get('username'):
+            for pw in self.credentials.get('password'):
+                # user = next(self.user)
+                # pw = next(self.password)
+                self.session.auth = (user, pw)  # first test all passwords with username 1, then with username 2...
+                try:
+                    self.test_connection()
+                except ConnectionError:
+                    print(f'Log in failed with "{user}":"{pw}"')
+                    continue  # try next pw
 
-        def init_session(self):
+                print(f'Log in success with "{user}":"{pw}"')
+                self.user = user
+                self.password = pw
+                self._secure = True
+                break
 
-            # if there's not already a session, start one
-            if not self._session:
-                print('Creating session object...')
-                return requests.Session()
-            else:
-                print('Session object already exists.')
-                return self._session
+            if self._secure:
+                break  # connection established, don't try another username
 
-        def init_auth_session(self):
+    def test_connection(self):
 
-            auth_session = self.init_session()
-            print('Session ready for credentials')
+        status_code = self._data_fetcher.fetch_data(self.session)  # returns 401 if timeout/actual 401 gotten
 
-            return auth_session
+        while status_code == 401:
+            raise ConnectionError("Connection failed")  # try next
 
-        def update_data(self, target, login_url=None):
-            self.response = self.data_fetcher.fetch_data(target=target, login_url=login_url)  # todo refactor to 'renew_data_fetcher' and 'update_data'
+
+class RegSession:
+
+    @staticmethod
+    def session():
+        return requests.session()
 
 
 class DataFetcher:
 
-    def __init__(self):
-        # self.target = target
-        # self.login_required = login_required
+    def __init__(self, login_url=None, url=None):
+        self._login_url = login_url
+        self._url = url
         pass
 
-    def login(self, url, parameters=None):
-        if not self._session:
-            return 'Cannot post to non-existent session'
+    @property
+    def login_url(self):
+        return self._login_url
 
-        print(f'Logging in to {url}')
-        self._session.post(url, headers=parameters)
+    @login_url.setter
+    def login_url(self, url):
+        self._login_url = url
 
-    def fetch_data(self, target, login_url=None, login_required=True):
+    @property
+    def url(self):
+        return self._url
 
-        if not self._session:
-            return 'Cannot fetch data without session'
+    @url.setter
+    def url(self, url):
+        self._url = url
 
-        if login_required:
-            self.login(login_url)
+    # def login(self, session, headers=None):
+    #     # ensure login_url has been passed to method
+    #     while not self.login_url:
+    #         self.login_url = input('Cannot login without login_url\n')
+    #
+    #     print(f'Logging in to {self.login_url}')
+    #     return session.post(self.login_url, headers=headers)
 
-        print(f'Fetching data from {target}')
-        return self._session.get(target)
+    def fetch_data(self, session):
+
+        print(f'Fetching data from {self.url}')
+        try:
+            return session.get(self.url, timeout=1).status_code
+        except requests.ReadTimeout:
+            return 401
+
 
 
 if __name__ == '__main__':
@@ -167,10 +203,8 @@ if __name__ == '__main__':
     # a cluster = portal_a
     #     b cluster = portal_b
     ip = '10.27.200.140'
-    thisthat = requests.session()
-    thisthat.auth = ('admin', '')
-    headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
-    resp = thisthat.post(f'http://{ip}/web/signin/open', headers=headers)
+    thisthat = EndpointFactory(data=endpoint_data, ip=ip)
+    # resp = thisthat.post(f'http://{ip}/web/signin/open', headers=headers)
     # type_ = thisthat.get(f'http://{ip}/getxml?location=Status', headers={'Content-Type': 'application/xml'})
     # type_ = ET.fromstring(type_.text)
     # target = "ProductPlatform"
