@@ -21,13 +21,13 @@ class DXCluster:
 
 class DX(Endpoint):
 
-    def __init__(self, ip, password="admin456"):
-        super().__init__(ip=ip, password=password)
+    def __init__(self, session, status_xml):
+        super().__init__(session, status_xml)
         self.call_string = ''
         self.name = ''
-        self.set_call_string(self.get_call_string())
+        # self.set_call_string(self.get_call_string())
         # print(f'my call string is {self.call_string}')
-        self.set_device_name(self.get_device_name())
+        # self.set_device_name(self.get_device_name())
         # print(f'my name is {self.name}')
 
     def get_device_name(self):

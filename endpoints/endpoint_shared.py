@@ -12,17 +12,17 @@ class Endpoint:
         headers=xml_dict['headers'],
     )
 
-    def __init__(self, ip='0.0.0.0', name="No name provided", call_string="", user='admin', password='admin456', testing=False):
-        self.ip = ip
-        self.call_string = call_string
-        self.user = user
-        self.password = password
+    def __init__(self, session, status_xml, ip='0.0.0.0', name="No name provided", testing=False):
+        # self.ip = ip
+        # self.call_string = call_string
+        # self.user = user
+        # self.password = password
         self.soundbank = SoundBank()
         self.ringtone = self.soundbank.get_ringtone()
         self.name = name
-        if not testing:
-            self.session = requests.session()
-            self.login()
+        # if not testing:
+        #     self.session = requests.session()
+        #     self.login()
 
     # def __repr__(self):
     #     if self.call_string: return self.call_string

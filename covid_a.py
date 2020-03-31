@@ -27,7 +27,18 @@ class XmlProcessor:
 class EndpointFactory:
 
     def __init__(self, queue):
-        self.queue = queue
+        self.queue = queue  # list of IPs
+
+    def process_queue(self):
+
+        endpoints = []
+
+        for ip in self.queue:
+            data = endpoint_data.copy()
+            endpoints.append(EndpointFactory.create(data, ip))
+
+        return endpoints  # list of endpoints
+
 
     @staticmethod
     def create(data, ip, status='Online'):
@@ -44,12 +55,11 @@ class EndpointFactory:
         session = EndpointFactory.add_session(data)
 
         # get product platform to determine what type of endpoint to make
-        root = ET.fromstring(session.get(f'http://{ip}/getxml?location=Status').text)
-        endpoint_model = EndpointFactory.get_status("ProductPlatform", root)
+        status_xml = ET.fromstring(session.get(f'http://{ip}/getxml?location=Status').text)
+        endpoint_model = EndpointFactory.get_status("ProductPlatform", status_xml)
 
         generator = EndpointFactory._get_generator(endpoint_model)
-
-        # self.make_endpoint()
+        return generator(session, status_xml)
 
     @staticmethod
     def add_session(data):
@@ -66,7 +76,7 @@ class EndpointFactory:
 
     @staticmethod
     def _make_DX(session, status_xml):
-        return DX()
+        return DX(session, status_xml)
 
     @staticmethod
     def _make_SX(session, status_xml):
@@ -245,8 +255,10 @@ if __name__ == '__main__':
     # clusters
     # a cluster = portal_a
     #     b cluster = portal_b
-    ip = '10.27.200.140'
-    thisthat = EndpointFactory(data=endpoint_data, ip=ip)
+    endpoint_ips = ['10.27.200.140', '10.33.110.119']
+    factory = EndpointFactory(endpoint_ips)
+    endpoints = [endpoint for endpoint in factory.process_queue()]
+    # thisthat = EndpointFactory(data=endpoint_data, ip=ip)
     # resp = thisthat.post(f'http://{ip}/web/signin/open', headers=headers)
     # type_ = thisthat.get(f'http://{ip}/getxml?location=Status', headers={'Content-Type': 'application/xml'})
     # type_ = ET.fromstring(type_.text)
