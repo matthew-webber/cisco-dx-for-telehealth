@@ -4,29 +4,7 @@ import xml.etree.ElementTree as ET
 from creds import endpoint_data
 from endpoints.endpoint_dx import DX
 from endpoints.endpoint_sx import SX
-
-
-def get_xml_value(target, xml):
-    return [node for node in xml.iter(target)][0]
-
-
-def get_nested_xml(xml, *args):
-    """
-    provided with an xml root and e.g. "UserInterface", "ContactInfo", "Name", will produce node containing DX/SX name
-    :param xml: XML root
-    :param args: nested nodes
-    :return: XML node
-    """
-    i = 0
-    if len(args) == 1:
-        return get_xml_value(args[0], xml)
-    # if i == 0:
-    #     i += 1
-    return get_nested_xml(get_xml_value(args[0], xml), *args[1:])
-    # else:
-
-# def get_xml_nest(target1, target2, xml):
-#     print([tag for tag in xml.iter(target1)])
+from ixml import *
 
 
 class Cluster:
@@ -54,11 +32,13 @@ class EndpointFactory:
 
     def process_queue(self):
 
-        endpoints = []
+        # endpoints = []
+        #
+        # for ip in self.queue:
+        #     data = endpoint_data.copy()
+        #     endpoints.append(EndpointFactory.create(data, ip))
 
-        for ip in self.queue:
-            data = endpoint_data.copy()
-            endpoints.append(EndpointFactory.create(data, ip))
+        endpoints = [EndpointFactory.create(endpoint_data.copy(), ip) for ip in self.queue]
 
         return endpoints  # list of endpoints
 
@@ -79,7 +59,8 @@ class EndpointFactory:
 
         # get product platform to determine what type of endpoint to make
         status_xml = ET.fromstring(session.get(f'http://{ip}/getxml?location=Status').text)
-        endpoint_model = get_xml_value("ProductPlatform", status_xml)
+        endpoint_model = get_xml_value("ProductPlatform", status_xml).text
+        print(f'Endpoint model is {endpoint_model}')
 
         generator = EndpointFactory._get_generator(endpoint_model)
         return generator(session, status_xml)
@@ -257,22 +238,21 @@ class DataFetcher:
 
         print(f'Fetching data from {self.url}')
         try:
-            return session.get(self.url, timeout=1).status_code
+            return session.get(self.url, timeout=2).status_code
         except requests.ReadTimeout:
             return 401
 
 
-
 if __name__ == '__main__':
 
+    endpoint_ips = ['10.27.200.140', '10.33.110.119']
+    factory = EndpointFactory(endpoint_ips)
+    endpoints = [endpoint for endpoint in factory.process_queue()]
 
-    # endpoint_ips = ['10.27.200.140', '10.33.110.119']
-    # factory = EndpointFactory(endpoint_ips)
-    # endpoints = [endpoint for endpoint in factory.process_queue()]
-    with open('testing/status.xml', 'r') as f:
-        root = ET.fromstring(f.read())
-
-    thisthat = get_nested_xml(root, 'UserInterface', 'ContactInfo', 'Name')
+    # with open('testing/status.xml', 'r') as f:
+    #     root = ET.fromstring(f.read())
+    #
+    # thisthat = get_nested_xml(root, 'UserInterface', 'ContactInfo', 'Name')
 
     # thisthat = EndpointFactory(data=endpoint_data, ip=ip)
     # resp = thisthat.post(f'http://{ip}/web/signin/open', headers=headers)

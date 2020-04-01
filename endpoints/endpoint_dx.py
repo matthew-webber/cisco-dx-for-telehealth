@@ -2,6 +2,7 @@ from endpoints.endpoint_shared import Endpoint
 from dicts import *
 import xml.etree.ElementTree as ET
 from direct_commands import *
+from ixml import *
 
 
 # DX cluster class
@@ -23,12 +24,21 @@ class DX(Endpoint):
 
     def __init__(self, session, status_xml):
         super().__init__(session, status_xml)
-        self.call_string = ''
-        self.name = ''
+        self.xml_lib = dict()
+        self.xml_lib['status'] = status_xml
+        self.name = self.get_name_2().text
+        self.call_string = self.get_call_string_2().text
         # self.set_call_string(self.get_call_string())
         # print(f'my call string is {self.call_string}')
         # self.set_device_name(self.get_device_name())
         # print(f'my name is {self.name}')
+
+    def get_name_2(self):
+        return get_nested_xml(self.xml_lib.get('status'), 'UserInterface', 'ContactInfo', 'Name')
+
+    def get_call_string_2(self):
+        return get_nested_xml(self.xml_lib.get('status'), 'SIP', 'Registration', 'URI')
+
 
     def get_device_name(self):
         URL_suffix = xml_dict['status']['device_name']
@@ -102,7 +112,3 @@ if __name__ == "__main__":
     myDX = DX('10.27.200.140', password='')
 
     call_string = myDX.get_device_name()
-
-
-
-
