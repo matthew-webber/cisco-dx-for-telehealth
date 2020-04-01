@@ -6,6 +6,29 @@ from endpoints.endpoint_dx import DX
 from endpoints.endpoint_sx import SX
 
 
+def get_xml_value(target, xml):
+    return [node for node in xml.iter(target)][0]
+
+
+def get_nested_xml(xml, *args):
+    """
+    provided with an xml root and e.g. "UserInterface", "ContactInfo", "Name", will produce node containing DX/SX name
+    :param xml: XML root
+    :param args: nested nodes
+    :return: XML node
+    """
+    i = 0
+    if len(args) == 1:
+        return get_xml_value(args[0], xml)
+    # if i == 0:
+    #     i += 1
+    return get_nested_xml(get_xml_value(args[0], xml), *args[1:])
+    # else:
+
+# def get_xml_nest(target1, target2, xml):
+#     print([tag for tag in xml.iter(target1)])
+
+
 class Cluster:
 
     def __init__(self, role):
@@ -56,7 +79,7 @@ class EndpointFactory:
 
         # get product platform to determine what type of endpoint to make
         status_xml = ET.fromstring(session.get(f'http://{ip}/getxml?location=Status').text)
-        endpoint_model = EndpointFactory.get_status("ProductPlatform", status_xml)
+        endpoint_model = get_xml_value("ProductPlatform", status_xml)
 
         generator = EndpointFactory._get_generator(endpoint_model)
         return generator(session, status_xml)
@@ -81,10 +104,6 @@ class EndpointFactory:
     @staticmethod
     def _make_SX(session, status_xml):
         return SX()
-
-    @staticmethod
-    def get_status(target, xml):
-        return [tag.text for tag in xml.iter(target)][0]
 
 
 class Endpoint:
@@ -246,18 +265,15 @@ class DataFetcher:
 
 if __name__ == '__main__':
 
-    # generate a new endpoint
-    # mock1 = TestEndpointMock('1.1.1.1', 'Mock1', 'test@example.com', 'DX', 'portal_a', 'status')
-    # specify type - DX, SX
 
-    # specify role = portal_a, portal_b (if portal_b, cart or desk)
-    # specify status = online, offline (if online, instantiate DX, if offline, mock object)
-    # clusters
-    # a cluster = portal_a
-    #     b cluster = portal_b
-    endpoint_ips = ['10.27.200.140', '10.33.110.119']
-    factory = EndpointFactory(endpoint_ips)
-    endpoints = [endpoint for endpoint in factory.process_queue()]
+    # endpoint_ips = ['10.27.200.140', '10.33.110.119']
+    # factory = EndpointFactory(endpoint_ips)
+    # endpoints = [endpoint for endpoint in factory.process_queue()]
+    with open('testing/status.xml', 'r') as f:
+        root = ET.fromstring(f.read())
+
+    thisthat = get_nested_xml(root, 'UserInterface', 'ContactInfo', 'Name')
+
     # thisthat = EndpointFactory(data=endpoint_data, ip=ip)
     # resp = thisthat.post(f'http://{ip}/web/signin/open', headers=headers)
     # type_ = thisthat.get(f'http://{ip}/getxml?location=Status', headers={'Content-Type': 'application/xml'})
