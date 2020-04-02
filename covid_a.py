@@ -1,4 +1,4 @@
-from endpoints.endpoint_mock import TestEndpointMock
+from endpoints.endpoint_mock import *
 import requests
 import xml.etree.ElementTree as ET
 from creds import endpoint_data
@@ -38,15 +38,34 @@ class EndpointFactory:
         #     data = endpoint_data.copy()
         #     endpoints.append(EndpointFactory.create(data, ip))
 
-        endpoints = [EndpointFactory.create(endpoint_data.copy(), ip) for ip in self.queue]
+        # endpoints = [EndpointFactory.create(endpoint_data.copy(), ip) for ip in self.queue]
+        endpoints = list()
+        mock_objects = list()
 
-        return endpoints  # list of endpoints
+        for ip in self.queue:
+            endpoint = EndpointFactory.create(endpoint_data.copy(), ip)
+            if endpoint:
+                endpoints.append(endpoint)
+            else:
+                mock_objects.append(ip)
 
+        if mock_objects:
+            factory = MockEndpointFactory()
+
+            endpoint_dict = factory.process_data(mock_objects)
+            endpoint_dict['online'] = endpoints
+
+        else:
+            endpoint_dict = {'online': endpoints}
+
+        return endpoint_dict
 
     @staticmethod
     def create(data, ip, status='Online'):
         """
         Create a session, grab the status.xml, and then create an endpoint with attached session and XML data
+        If session can't be created, get help from the mock object factory
+
         :param data: dict of endpoint data
         :param ip: endpoint IPv4 address
         :param status: Online/Offline string
@@ -56,6 +75,9 @@ class EndpointFactory:
         data['login_url'] = data['login_url'].replace('$ip', ip)
         data['test_url'] = data['test_url'].replace('$ip', ip)
         session = EndpointFactory.add_session(data)
+
+        if not session:  # if cart not online, None should be returned as session
+            return None
 
         # get product platform to determine what type of endpoint to make
         status_xml = ET.fromstring(session.get(f'http://{ip}/getxml?location=Status').text)
@@ -112,9 +134,16 @@ class SessionModule:
                                test_url=login_data['test_url']).session
         elif login_data:
             # create new auth session
-            return AuthSession(credentials=login_data['credentials'],
-                               login_url=login_data['login_url'],
-                               test_url=login_data['test_url']).session
+            session_ = AuthSession(credentials=login_data['credentials'],
+                                  login_url=login_data['login_url'],
+                                  test_url=login_data['test_url'])
+
+            # a connection timeout should return None so a mock obj can be created
+            if session_.online:
+                return session_.session
+            else:
+                return None
+
         else:
             # create new non-auth session
             return RegSession
@@ -155,7 +184,7 @@ class SessionModule:
 class AuthSession:
 
     def __init__(self, credentials, login_url, test_url, session=None):
-        self._secure = False
+        self.online = False
         self.session = session
         self._data_fetcher = DataFetcher(login_url=login_url, url=test_url)
         self.credentials = credentials
@@ -179,17 +208,16 @@ class AuthSession:
                     print(f'Log in failed with "{user}":"{pw}"')
                     continue  # try next pw
                 except TimeoutError:
-                    print('returning None')
+                    print('Connection timed out.')
                     break
-                    return None
 
                 print(f'Log in success with "{user}":"{pw}"')
                 self.user = user
                 self.password = pw
-                self._secure = True
+                self.online = True
                 break
 
-            if self._secure:
+            if self.online:
                 break  # connection established, don't try another username
             else:
                 return None
@@ -257,9 +285,10 @@ class DataFetcher:
 
 if __name__ == '__main__':
 
-    endpoint_ips = ['10.27.200.140', '10.33.110.119']
+    endpoint_ips = ['10.27.200.140', '10.33.110.0', '10.33.155.0']
     factory = EndpointFactory(endpoint_ips)
-    endpoints = [endpoint for endpoint in factory.process_queue()]
+    # endpoints = [endpoint for endpoint in factory.process_queue()]
+    endpoints = factory.process_queue()
 
     # with open('testing/status.xml', 'r') as f:
     #     root = ET.fromstring(f.read())
