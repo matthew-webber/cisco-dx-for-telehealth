@@ -34,7 +34,7 @@ class DX(Endpoint):
         # print(f'my name is {self.name}')
 
     def get_name_2(self):
-        return get_nested_xml(self.xml_lib.get('status'), 'UserInterface', 'ContactInfo', 'Name')
+        return get_nested_xml(self.xml_lib.get('status'), "ContactInfo/Name")
 
     def get_call_string_2(self):
         return get_nested_xml(self.xml_lib.get('status'), 'SIP', 'Registration', 'URI')
