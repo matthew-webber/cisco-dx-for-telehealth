@@ -47,52 +47,75 @@ def point_all_to_CUCM(DXs):
 # wendysDX = DX('128.23.200.16')
 
 
-myDX = DX('10.27.200.140', password='')
+# myDX = DX('10.27.200.140', password='')
 
 # # update group 1
-DX_TELEPOD_01 = DX('10.33.114.35')
+# DX_TELEPOD_01 = DX('10.33.114.35')
 
 # # update group 2
 print('Logging into group 2...')
 DX_NS_01 = DX('10.33.110.119')
-DX_NS_02 = DX('10.33.112.74')
-# DX_NS_03 = DX('10.33.69.192')  # ex DX Patient 3
-DX_NS_03 = DummyDX('10.33.69.192', 'DX-NS-03', '40166@cucm.musc.edu')  # ex DX Patient 3
+# DX_NS_02 = DX('10.33.112.74')
+DX_NS_02 = DummyDX('10.33.112.74', 'DX-NS-02', '40178@cucm.musc.edu')
+DX_NS_03 = DX('10.33.69.192')
+# DX_NS_03 = DummyDX('10.33.69.192', 'DX-NS-03', '40166@cucm.musc.edu')
 DX_NS_04 = DX('10.33.80.108')
 DX_NS_05 = DX('10.33.72.81')
-# DX_NS_06 = DX('10.33.58.244')
-DX_NS_06 = DummyDX('10.33.58.244', 'DX-NS-06', '40193@cucm.musc.edu')
+DX_NS_06 = DX('10.33.58.244')
+# DX_NS_06 = DummyDX('10.33.58.244', 'DX-NS-06', '40193@cucm.musc.edu')
 DX_NS_07 = DX('10.33.49.50')
 DX_NS_08 = DX('10.33.72.103')
 DX_NS_09 = DX('10.33.20.6')  # ex DX Patient 4
 DX_NS_10 = DX('10.33.0.106')
+DX_NS_11 = DX('10.33.111.4')
 DX_NS_12 = DX('10.33.15.156')
+DX_NS_13 = DX('10.33.126.200')
+DX_NS_14 = DX('10.33.121.109')
+DX_NS_15 = DX('128.23.200.158')
+DX_NS_16 = DX('128.23.200.189')
 
-print('Logging into ID station...')
-DX_ID_NS_01 = DX('10.33.46.85')
+# print('Logging into ID station...')
+# DX_ID_NS_01 = DX('10.33.46.85')
 
-NS_group = [DX_NS_01, DX_NS_02, DX_NS_04, DX_NS_05, DX_NS_07, DX_NS_08, DX_NS_09, DX_NS_12]
+NS_group = [DX_NS_01,
+            # DX_NS_02,
+            DX_NS_03,
+            DX_NS_04,
+            DX_NS_05,
+            DX_NS_06,
+            DX_NS_07,
+            DX_NS_08,
+            DX_NS_09,
+            DX_NS_10,
+            DX_NS_11,
+            DX_NS_12,
+            DX_NS_13,
+            DX_NS_14,
+            DX_NS_15,
+            DX_NS_16]
 
 # # favorites 1
 print('Logging into carts...')
-CART_01 = DX('10.33.26.21')
-# CART_01 = DummyDX('10.33.26.21', 'MONA-VPO-CART-01', '11001@cucm.musc.edu')
+# CART_01 = DX('10.33.26.21')
+CART_01 = DummyDX('10.33.26.21', 'MONA-VPO-CART-01', '11001@cucm.musc.edu')
 CART_02 = DX('10.33.9.189')
 # CART_02 = DummyDX('10.33.9.189', 'MONA-VPO-CART-02', '11002@cucm.musc.edu')  # offline 12:34 3/26
-# CART_03 = DX('10.33.10.144')
-CART_03 = DummyDX('10.33.10.144', 'MONA-VPO-CART-03', '11003@cucm.musc.edu')
+CART_03 = DX('10.33.10.144')
+# CART_03 = DummyDX('10.33.10.144', 'MONA-VPO-CART-03', '11003@cucm.musc.edu')
 # CART_04 = DummyDX('10.33.111.118', 'MONA-VPO-CART-04', '11004@cucm.musc.edu')
 CART_04 = DX('10.33.111.118')
 CART_05 = DX('10.33.58.239')
 CART_06 = DX('10.33.102.141')
-CART_07 = DummyDX('10.33.107.22', 'MONA-VPO-CART-07', '11007@cucm.musc.edu')
+CART_07 = DX('10.33.107.22')
+# CART_07 = DummyDX('10.33.107.22', 'MONA-VPO-CART-07', '11007@cucm.musc.edu')
 CART_08 = DX('10.33.72.38')
 CART_09 = DX('10.33.84.116')
 CART_10 = DX('10.33.107.207')
 CART_11 = DX('10.33.102.191')
 CART_12 = DX('10.33.1.119')
 CART_13 = DX('10.33.126.42')
-CART_14 = DX('10.33.45.45')
+# CART_14 = DX('10.33.45.45')
+CART_14 = DummyDX('10.33.45.45', 'MONA-VPO-CART-14', '11014@cucm.musc.edu')
 CART_15 = DX('10.33.76.80')
 CART_16 = DX('10.33.2.188')
 # CART_17 = DX('10.33.62.71')
@@ -101,22 +124,45 @@ CART_18 = DX('10.33.31.218', password='')  # todo change pw to admin456
 CART_19 = DX('10.33.117.19')
 CART_20 = DX('10.33.87.102')
 
-# favorites 2
-print('Logging into patient DXs...')
-patientDX1 = DX('10.33.59.0')
-patientDX2 = DX('10.33.39.69')
-patientDX3 = DX('10.33.18.168')
-patientDX4 = DX('10.33.1.143')
-patientDX5 = DX('10.33.81.103')
-patientDX6 = DX('10.33.31.227')
-patientDX7 = DX('10.33.120.174')
-patientDX8 = DX('10.33.27.113')
-patientDX10 = DummyDX('10.33.100.145', 'DX-PATIENT-10', '40162@cucm.musc.edu')  # registered but can't hit webUI
-patientDX12 = DX('10.33.45.139')
+carts_only = [
+    CART_01,
+    CART_02,
+    CART_03,
+    CART_04,
+    CART_05,
+    CART_06,
+    CART_07,
+    CART_08,
+    CART_09,
+    CART_10,
+    CART_11,
+    CART_12,
+    CART_13,
+    CART_14,
+    CART_15,
+    CART_16,
+    CART_17,
+    CART_18,
+    CART_19,
+    CART_20
+]
 
-carts_only = [CART_01, CART_02, CART_03, CART_04, CART_05, CART_06, CART_07, CART_08, CART_09, CART_11, CART_12, CART_13, CART_14, CART_15, CART_16, CART_17, CART_18, CART_19, CART_20]
-patient_DXs = [patientDX1, patientDX2, patientDX3, patientDX4, patientDX5, patientDX6, patientDX7, patientDX8, patientDX10, patientDX12]
-all_pt_endpoints = carts_only + patient_DXs
+# favorites 2
+# print('Logging into patient DXs...')
+# patientDX1 = DX('10.33.59.0')
+# patientDX2 = DX('10.33.39.69')
+# patientDX3 = DX('10.33.18.168')
+# patientDX4 = DX('10.33.1.143')
+# patientDX5 = DX('10.33.81.103')
+# patientDX6 = DX('10.33.31.227')
+# patientDX7 = DX('10.33.120.174')
+# patientDX8 = DX('10.33.27.113')
+# patientDX10 = DummyDX('10.33.100.145', 'DX-PATIENT-10', '40162@cucm.musc.edu')  # registered but can't hit webUI
+# patientDX12 = DX('10.33.45.139')
+
+
+# patient_DXs = [patientDX1, patientDX2, patientDX3, patientDX4, patientDX5, patientDX6, patientDX7, patientDX8, patientDX10, patientDX12]
+# all_pt_endpoints = carts_only + patient_DXs
 
 # DX_TRIAGE_01 = DX('10.33.81.103')
 # DX_TRIAGE_02 = DX('128.23.2.27')
@@ -132,16 +178,16 @@ pspn_vidyo = '102007@vidyo.pspnsc.org'
     #     myDX.delete_contact(elem.find('ContactId').text)
 
 alert_path = '/Users/matt/PycharmProjects/dx_sx_api/DX_alert_msg.txt'  # home iMac
-
-print(f'Updating {DX_TELEPOD_01.name}...')
-DX_TELEPOD_01.delete_all_contacts()
-DX_TELEPOD_01.add_all_favorites(favorites=all_pt_endpoints)
-DX_TELEPOD_01.display_covid_alert(path=alert_path)
-
-print(f'Updating {DX_ID_NS_01.name}...')
-DX_ID_NS_01.delete_all_contacts()
-DX_ID_NS_01.add_all_favorites(favorites=patient_DXs)
-DX_ID_NS_01.display_covid_alert(path=alert_path)
+#
+# print(f'Updating {DX_TELEPOD_01.name}...')
+# DX_TELEPOD_01.delete_all_contacts()
+# DX_TELEPOD_01.add_all_favorites(favorites=all_pt_endpoints)
+# DX_TELEPOD_01.display_covid_alert(path=alert_path)
+#
+# print(f'Updating {DX_ID_NS_01.name}...')
+# DX_ID_NS_01.delete_all_contacts()
+# DX_ID_NS_01.add_all_favorites(favorites=patient_DXs)
+# DX_ID_NS_01.display_covid_alert(path=alert_path)
 
 for dx_ in NS_group:
     print(f'Updating {dx_.name}...')
