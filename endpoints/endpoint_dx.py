@@ -26,8 +26,8 @@ class DX(Endpoint):
         super().__init__(session, status_xml)
         self.xml_lib = dict()
         self.xml_lib['status'] = status_xml
-        self.name = self.get_name_2().text
-        self.call_string = self.get_call_string_2().text
+        self.name = self.get_name_2()[0].text
+        self.call_string = self.get_call_string_2()[0].text
         # self.set_call_string(self.get_call_string())
         # print(f'my call string is {self.call_string}')
         # self.set_device_name(self.get_device_name())
@@ -37,7 +37,7 @@ class DX(Endpoint):
         return get_nested_xml(self.xml_lib.get('status'), "ContactInfo/Name")
 
     def get_call_string_2(self):
-        return get_nested_xml(self.xml_lib.get('status'), 'SIP', 'Registration', 'URI')
+        return get_nested_xml(self.xml_lib.get('status'), 'Registration/URI')
 
 
     def get_device_name(self):

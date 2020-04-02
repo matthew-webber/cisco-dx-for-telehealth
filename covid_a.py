@@ -59,7 +59,7 @@ class EndpointFactory:
 
         # get product platform to determine what type of endpoint to make
         status_xml = ET.fromstring(session.get(f'http://{ip}/getxml?location=Status').text)
-        endpoint_model = get_xml_value("ProductPlatform", status_xml).text
+        endpoint_model = get_xml_value("ProductPlatform", status_xml)[0].text
         print(f'Endpoint model is {endpoint_model}')
 
         generator = EndpointFactory._get_generator(endpoint_model)
@@ -178,6 +178,10 @@ class AuthSession:
                 except ConnectionError:
                     print(f'Log in failed with "{user}":"{pw}"')
                     continue  # try next pw
+                except TimeoutError:
+                    print('returning None')
+                    break
+                    return None
 
                 print(f'Log in success with "{user}":"{pw}"')
                 self.user = user
@@ -187,6 +191,8 @@ class AuthSession:
 
             if self._secure:
                 break  # connection established, don't try another username
+            else:
+                return None
 
     def test_connection(self):
 
@@ -194,6 +200,10 @@ class AuthSession:
 
         while status_code == 401:
             raise ConnectionError("Connection failed")  # try next
+
+        if status_code == 'FAILED_CONNECTION':
+            raise TimeoutError("Connection timed out") # create mock object
+
 
 
 class RegSession:
@@ -238,9 +248,11 @@ class DataFetcher:
 
         print(f'Fetching data from {self.url}')
         try:
-            return session.get(self.url, timeout=2).status_code
+            return session.get(self.url, timeout=2, allow_redirects=False).status_code
         except requests.ReadTimeout:
             return 401
+        except requests.exceptions.ConnectTimeout:
+            return 'FAILED_CONNECTION'
 
 
 if __name__ == '__main__':
