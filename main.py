@@ -78,11 +78,12 @@ DX_NS_14 = DX('10.33.121.109')
 DX_NS_15 = DX('128.23.200.158')
 DX_NS_16 = DX('128.23.200.189')
 DX_5C_NS_01 = DX('10.33.46.85')
-DX_5C_NS_02 = DummyDX('10.33.121.109', 'DX-5C-NS-02', '40203@cucm.musc.edu')
+DX_5C_NS_02 = DX('10.33.121.109')
 
 # DX_NS_02 = DX('10.33.112.74')
 # DX_NS_03 = DummyDX('10.33.69.192', 'DX-NS-03', '40166@cucm.musc.edu')
 # DX_NS_06 = DummyDX('10.33.58.244', 'DX-NS-06', '40193@cucm.musc.edu')
+DX_5C_NS_02 = DummyDX('10.33.121.109', 'DX-5C-NS-02', '40203@cucm.musc.edu')
 
 NS_refresh_group = [DX_NS_01,
                     # DX_NS_02,
@@ -208,9 +209,9 @@ all_pt_endpoints = carts_only + patient_DXs
 
 alert_path = '/Users/matt/PycharmProjects/dx_sx_api/DX_alert_msg.txt'  # home iMac
 
-print('\nUpdating telepod...\n')
-provider_refresh(DX_TELEPOD_01, favorites=all_pt_endpoints + NS_contact_group)
-
-print('\nUpdating nurse stations...\n')
-for dx_ in NS_refresh_group:
-    provider_refresh(dx_, favorites=all_pt_endpoints + NS_contact_group)
+# print('\nUpdating telepod...\n')
+# provider_refresh(DX_TELEPOD_01, favorites=all_pt_endpoints + NS_contact_group)
+#
+# print('\nUpdating nurse stations...\n')
+# for dx_ in NS_refresh_group:
+#     provider_refresh(dx_, favorites=all_pt_endpoints + NS_contact_group)
