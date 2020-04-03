@@ -28,6 +28,25 @@ class DX(Endpoint):
         self.xml_lib['status'] = status_xml
         self.name = self.get_name_2()[0].text
         self.call_string = self.get_call_string_2()[0].text
+        self._role, self._type = None, None
+
+
+    @property
+    def role(self):
+        return self._role
+
+    @role.setter
+    def role(self, role):
+        self._role = role
+
+    @property
+    def type(self):
+        return self._type
+
+    @type.setter
+    def type(self, type_):
+        self._type = type_
+
         # self.set_call_string(self.get_call_string())
         # print(f'my call string is {self.call_string}')
         # self.set_device_name(self.get_device_name())

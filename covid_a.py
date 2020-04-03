@@ -33,6 +33,20 @@ class EndpointFactory:
         self.queue = queue  # list of IPs
 
     def process_queue(self):
+        """
+        Takes a list of endpoint IPs and generates either a...
+
+            * live endpoint (DX, SX, etc.), or
+            * a mock object (ibid)
+
+        ...and returns a dictionary of these objects.
+
+        "Online" = live endpoints
+        "Offline" = mock objects
+        "Unknown" = IP not online and not in mock data .csv file
+
+        :return: dict()
+        """
 
         endpoints = list()
         mock_objects = list()
@@ -351,6 +365,8 @@ if __name__ == '__main__':
 
     # all_data = MockDataDaemon().pull_all_data()
     # endpoint_ips = [endpoint['ip'] for endpoint in all_data]
+    role_definer = RoleDefiner(patient_identifiers=['CART', 'DX-PATIENT'],
+                               provider_types=['DX-NS', 'TELEPOD', 'ID-NS', 'TRIAGE'])
     endpoint_ips = ['10.33.112.74', '10.33.100.145']
     factory = EndpointFactory(endpoint_ips)
 

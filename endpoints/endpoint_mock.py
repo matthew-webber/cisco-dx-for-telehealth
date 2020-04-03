@@ -48,7 +48,7 @@ class MockEndpointFactory:
     def __init__(self):
         self.mock_data = MockDataDaemon.pull_all_data()  # prep the factory by gathering all data from the .csv file
 
-    def process_data(self, ip_list: type = list):
+    def process_data(self, ip_list: list):
         """
         Uses the mock data daemon to perform an iterative search over the mock data
         and put these into containers for the parent factory to use
@@ -85,13 +85,27 @@ class TestEndpointMock:
         self.ip = endpoint_data['ip']
         self.name = endpoint_data['name']
         self.call_string = endpoint_data['call_string']
-
-        role_definer = RoleDefiner(patient_types=['CART', 'DX-PATIENT'], provider_types=['DX-NS', 'TELEPOD', 'ID-NS', 'TRIAGE'])
-        self.role, self.type = role_definer.define_roles(self.name)
+        self._role, self._type = None, None
 
         # self.status = endpoint_data['status']
         # print(f'Logging in to {self.ip}...')
         # print(f'Success!')
+        
+    @property
+    def role(self):
+        return self._role
+    
+    @role.setter
+    def role(self, role):
+        self._role = role       
+        
+    @property
+    def type(self):
+        return self._type
+    
+    @type.setter
+    def type(self, type_):
+        self._type = type_
 
 
 if __name__ == '__main__':
