@@ -5,6 +5,8 @@ from creds import endpoint_data
 from endpoints.endpoint_dx import DX
 from endpoints.endpoint_sx import SX
 from ixml import *
+import re
+from urllib3.exceptions import NewConnectionError
 
 
 class Cluster:
@@ -32,13 +34,6 @@ class EndpointFactory:
 
     def process_queue(self):
 
-        # endpoints = []
-        #
-        # for ip in self.queue:
-        #     data = endpoint_data.copy()
-        #     endpoints.append(EndpointFactory.create(data, ip))
-
-        # endpoints = [EndpointFactory.create(endpoint_data.copy(), ip) for ip in self.queue]
         endpoints = list()
         mock_objects = list()
 
@@ -74,6 +69,7 @@ class EndpointFactory:
         # grab a session using data added to method
         data['login_url'] = data['login_url'].replace('$ip', ip)
         data['test_url'] = data['test_url'].replace('$ip', ip)
+        print(f'Logging into {ip}...')
         session = EndpointFactory.add_session(data)
 
         if not session:  # if cart not online, None should be returned as session
@@ -127,6 +123,8 @@ class SessionModule:
     @staticmethod
     def get_session(session, login_data):
 
+        online = False
+
         if session and login_data:
             # authorize current session
             return AuthSession(credentials=login_data['credentials'],
@@ -140,6 +138,9 @@ class SessionModule:
 
             # a connection timeout should return None so a mock obj can be created
             if session_.online:
+                online = True
+
+            if online:
                 return session_.session
             else:
                 return None
@@ -205,13 +206,18 @@ class AuthSession:
                 try:
                     self.test_connection()
                 except ConnectionError:
-                    print(f'Log in failed with "{user}":"{pw}"')
+                    # print(f'Log in failed with "{user}":"{pw}"')
                     continue  # try next pw
-                except TimeoutError:
+                except (NewConnectionError, TimeoutError):
                     print('Connection timed out.')
                     break
+                except Exception as e:
+                    print('Max retries with URL... or something else...?')
+                    break
 
-                print(f'Log in success with "{user}":"{pw}"')
+                # print(f'Log in success with "{user}":"{pw}"')
+                print(f'Logged in succesfully!')
+
                 self.user = user
                 self.password = pw
                 self.online = True
@@ -274,21 +280,82 @@ class DataFetcher:
 
     def fetch_data(self, session):
 
-        print(f'Fetching data from {self.url}')
+        # print(f'Fetching data from {self.url}')
         try:
             return session.get(self.url, timeout=2, allow_redirects=False).status_code
         except requests.ReadTimeout:
             return 401
         except requests.exceptions.ConnectTimeout:
             return 'FAILED_CONNECTION'
+        except ConnectionRefusedError:
+            return 'REFUSED_CONNECTION'
+
+
+class RoleDefiner:
+
+    # import re
+    # identifiers = {'patient': [identifiers]}
+    # sorter = EndpointSorter(identifiers)
+    # sorted_endpoints = [sorter.get_role(endpoint, add_flag=True) for endpoint in [unsorted_endpoints]]
+
+    def __init__(self, patient_identifiers, provider_types, add_flag):
+        self.patient_identifiers = patient_identifiers
+        self.provider_types = provider_types
+        self.flag = add_flag
+
+    def get_role(self, endpoint):
+
+        # if name not like any identifiers, it must be a provider
+        role = 'provider'
+
+        for identifier in self.patient_identifiers:
+            match = re.search(identifier, endpoint.name)  # it's in the patient_identifiers list...
+            if match:
+                role = 'patient'
+
+        # return {'role': role}
+        return role
+
+    def get_type(self, provider_endpoint):
+
+        type_ = "Unknown"
+
+        for provider_type in self.provider_types:
+            match = re.search(provider_type.upper(), provider_endpoint.name.upper())
+            if match:
+                type_ = match[0]
+
+        # if not in self.provider_types, it's an unknown type
+        return {"type": type_}
+
+
+class EndpointSorter:
+
+    def __init__(self):
+        pass
+
+
+class Directives:
+
+    def __init__(self, input_queue):
+        self.queue = input_queue
+
+    @staticmethod
+    def add_directives():
+        pass
 
 
 if __name__ == '__main__':
 
-    endpoint_ips = ['10.27.200.140', '10.33.110.0', '10.33.155.0']
+    # todo TEST if running this when a DX is on gets the proper online vs mock object (run, reboot + run)
+
+    # all_data = MockDataDaemon().pull_all_data()
+    # endpoint_ips = [endpoint['ip'] for endpoint in all_data]
+    endpoint_ips = ['10.33.112.74', '10.33.100.145']
     factory = EndpointFactory(endpoint_ips)
-    # endpoints = [endpoint for endpoint in factory.process_queue()]
+
     endpoints = factory.process_queue()
+
 
     # with open('testing/status.xml', 'r') as f:
     #     root = ET.fromstring(f.read())

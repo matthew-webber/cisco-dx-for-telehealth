@@ -1,4 +1,5 @@
 import csv
+from data.teleport_data import RoleDefiner
 
 
 class MockDataDaemon:
@@ -47,7 +48,7 @@ class MockEndpointFactory:
     def __init__(self):
         self.mock_data = MockDataDaemon.pull_all_data()  # prep the factory by gathering all data from the .csv file
 
-    def process_data(self, ip_list):
+    def process_data(self, ip_list: type = list):
         """
         Uses the mock data daemon to perform an iterative search over the mock data
         and put these into containers for the parent factory to use
@@ -71,7 +72,7 @@ class MockEndpointFactory:
         unknown_ips = [ip for ip, data_match
                         in matching_data.items() if not data_match]
 
-        return {'mocks': mock_objects, 'unknowns': unknown_ips}
+        return {'offline': mock_objects, 'unknowns': unknown_ips}
 
     @staticmethod
     def create(mock_object_data):
@@ -84,17 +85,20 @@ class TestEndpointMock:
         self.ip = endpoint_data['ip']
         self.name = endpoint_data['name']
         self.call_string = endpoint_data['call_string']
-        self.type = endpoint_data['type_']
-        self.role = endpoint_data['role']
-        self.status = endpoint_data['status']
+
+        role_definer = RoleDefiner(patient_types=['CART', 'DX-PATIENT'], provider_types=['DX-NS', 'TELEPOD', 'ID-NS', 'TRIAGE'])
+        self.role, self.type = role_definer.define_roles(self.name)
+
+        # self.status = endpoint_data['status']
         # print(f'Logging in to {self.ip}...')
         # print(f'Success!')
 
 
 if __name__ == '__main__':
 
-    failed_logon_with = ['1.1.1.1']
+    mock_ips = ['10.33.155.0', '10.33.110.0', '10.33.110.200']
 
     factory = MockEndpointFactory()
 
-    a = factory.process_data(failed_logon_with)
+    a = factory.process_data(mock_ips)
+
