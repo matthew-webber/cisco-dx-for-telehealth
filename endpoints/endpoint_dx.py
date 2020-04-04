@@ -22,13 +22,10 @@ class DXCluster:
 
 class DX(Endpoint):
 
-    def __init__(self, session, status_xml):
-        super().__init__(session, status_xml)
-        self.xml_lib = dict()
-        self.xml_lib['status'] = status_xml
+    def __init__(self, session, status_xml, ip):
+        super().__init__(session=session, status_xml=status_xml, ip=ip)
         self.name = self.get_name_2()[0].text
         self.call_string = self.get_call_string_2()[0].text
-        self._role, self._type = None, None
 
 
     @property
@@ -52,12 +49,15 @@ class DX(Endpoint):
         # self.set_device_name(self.get_device_name())
         # print(f'my name is {self.name}')
 
+    def execute_directives(self):
+        for directive in self.directives.values():
+            directive(self)
+
     def get_name_2(self):
         return get_nested_xml(self.xml_lib.get('status'), "ContactInfo/Name")
 
     def get_call_string_2(self):
         return get_nested_xml(self.xml_lib.get('status'), 'Registration/URI')
-
 
     def get_device_name(self):
         URL_suffix = xml_dict['status']['device_name']
@@ -67,6 +67,12 @@ class DX(Endpoint):
         # now parse the response -- this needs to go elsewhere
         root = ET.fromstring(response.text)
         return root[0][0][0].text
+
+    # todo add UPDATE FAVORITES method + move to shared object???
+    def collect_favorites(self, endpoints, favorite_types):
+        for endpoint in endpoints:
+            if endpoint.type in favorite_types:
+                self._favorites.append(endpoint)
 
     def get_call_string(self):
         URL_suffix = xml_dict['status']['call_string']

@@ -1,5 +1,6 @@
 ip,name,call_string
-10.33.46.85,DX-ID-NS-01,40177@cucm.musc.edu
+10.33.46.85,DX-5C-NS-01,40177@cucm.musc.edu
+10.33.121.109,DX-5C-NS-02,40203@cucm.musc.edu
 10.33.110.119,DX-NS-01,40159@cucm.musc.edu
 10.33.112.74,DX-NS-02,40178@cucm.musc.edu
 10.33.69.192,DX-NS-03,40166@cucm.musc.edu
@@ -13,7 +14,6 @@ ip,name,call_string
 10.33.111.4,DX-NS-11,40201@cucm.musc.edu
 10.33.15.156,DX-NS-12,40160@cucm.musc.edu
 10.33.126.200,DX-NS-13,40202@cucm.musc.edu
-10.33.121.109,DX-NS-14,40203@cucm.musc.edu
 128.23.200.158,DX-NS-15,40204@cucm.musc.edu
 128.23.200.189,DX-NS-16,40205@cucm.musc.edu
 10.33.59.0,DX-PATIENT-01,40172@cucm.musc.edu
@@ -40,11 +40,11 @@ ip,name,call_string
 10.33.107.207,MONA-VPO-CART-10,11010@cucm.musc.edu
 10.33.102.191,MONA-VPO-CART-11,11011@cucm.musc.edu
 10.33.1.119,MONA-VPO-CART-12,11012@cucm.musc.edu
-10.33.126.42,MONA-VPO-CART-14,11014@cucm.musc.edu
-10.33.45.45,MONA-VPO-CART-15,11015@cucm.musc.edu
-10.33.76.80,MONA-VPO-CART-16,11016@cucm.musc.edu
-10.33.2.188,MONA-VPO-CART-17,11017@cucm.mudc.edu
-10.33.62.71,MONA-VPO-CART-18,11018@cucm.musc.edu
-10.33.31.218,MONA-VPO-CART-19,11019@cucm.musc.edu
-10.33.117.19,MONA-VPO-CART-20,11020@cucm.musc.edu
-10.33.87.102,MONA-VPO-CART-13,11013@cucm.musc.ed
+10.33.126.42,MONA-VPO-CART-13,11013@cucm.musc.ed
+10.33.45.45,MONA-VPO-CART-14,11014@cucm.musc.edu
+10.33.76.80,MONA-VPO-CART-15,11015@cucm.musc.edu
+10.33.2.188,MONA-VPO-CART-16,11016@cucm.musc.edu
+255.255.255.255,MONA-VPO-CART-17,11017@cucm.mudc.edu
+10.33.31.218,MONA-VPO-CART-18,11018@cucm.musc.edu
+10.33.117.19,MONA-VPO-CART-19,11019@cucm.musc.edu
+10.33.87.102,MONA-VPO-CART-20,11020@cucm.musc.edu

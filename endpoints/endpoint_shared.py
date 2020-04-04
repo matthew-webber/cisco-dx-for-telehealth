@@ -13,16 +13,20 @@ class Endpoint:
     )
 
     def __init__(self, session, status_xml, ip='0.0.0.0', name="No name provided", testing=False):
-        # self.ip = ip
+        self.ip = ip
         # self.call_string = call_string
         # self.user = user
         # self.password = password
+        self.xml_lib = dict()
+        self.xml_lib['status'] = status_xml
         self.soundbank = SoundBank()
         self.ringtone = self.soundbank.get_ringtone()
         self.name = name
-        # if not testing:
-        #     self.session = requests.session()
-        #     self.login()
+        self.session = session
+        self.status_xml = status_xml
+
+        # these will be defined by the role definer / provisioner post instantiation
+        self._role, self._type, self.directives, self._favorites = None, None, None, list()
 
     # def __repr__(self):
     #     if self.call_string: return self.call_string
@@ -41,8 +45,8 @@ class Endpoint:
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)
 
-    def add_all_favorites(self, favorites):
-        for favorite in favorites:
+    def add_all_favorites(self):
+        for favorite in self._favorites:
             self.add_contact(favorite.name, favorite.call_string)
         print(f'{self.name} - favorites added!')
 

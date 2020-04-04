@@ -72,7 +72,9 @@ class MockEndpointFactory:
         unknown_ips = [ip for ip, data_match
                         in matching_data.items() if not data_match]
 
-        return {'offline': mock_objects, 'unknowns': unknown_ips}
+        if unknown_ips: print('Unknown IPs ignored!', unknown_ips)
+
+        return dict(offline=mock_objects)
 
     @staticmethod
     def create(mock_object_data):
@@ -85,7 +87,9 @@ class TestEndpointMock:
         self.ip = endpoint_data['ip']
         self.name = endpoint_data['name']
         self.call_string = endpoint_data['call_string']
-        self._role, self._type = None, None
+
+        # these will be defined by the role definer / provisioner post instantiation
+        self._role, self._type, self._directives = None, None, None
 
         # self.status = endpoint_data['status']
         # print(f'Logging in to {self.ip}...')

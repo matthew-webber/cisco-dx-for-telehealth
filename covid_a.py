@@ -5,8 +5,8 @@ from creds import endpoint_data
 from endpoints.endpoint_dx import DX
 from endpoints.endpoint_sx import SX
 from ixml import *
-import re
-from urllib3.exceptions import NewConnectionError
+from urllib3.exceptions import NewConnectionError  # todo is this still needed?
+from data.teleport_data import TeleportProvisioner
 
 
 class Cluster:
@@ -22,17 +22,84 @@ class Cluster:
     def role(self, role):
         self._role = role
 
+
 class XmlProcessor:
 
     pass
 
 
+class EndpointStorage:
+
+    def __init__(self, endpoints):
+        self.online = endpoints['online']
+        self.offline = endpoints['offline']
+
+    def add_endpoints(self, endpoints, status):
+        """# todo """
+        if status == "ONLINE":
+            self.online.append(endpoints)
+        elif status == "OFFLINE":
+            self.offline.append(endpoints)
+
+
 class EndpointFactory:
 
-    def __init__(self, queue):
+    def __init__(self, queue, **kwargs):
+        """
+        FIRE IT UP, LER!! **VRRROOOM!!**
+        :param queue: list of IPs
+        :param kwargs: empty dict of expected output structure (e.g. {'online': None, 'offline': None}
+        """
         self.queue = queue  # list of IPs
+        self.endpoints_types = {k: [] for k in kwargs.keys()}
+        self.online_queue = list(dict())  # online endpoints need to store pairing session
+        self.offline_queue = list()  # offline endpoints can just be IPs
+        self.endpoint_data = endpoint_data.copy()
 
     def process_queue(self):
+        """Puts each IP address in the factory queue through the factory sorter"""
+
+        for ip in self.queue:
+            self.endpoint_sorter(ip)
+
+    def package_endpoints(self, mode="DEFAULT"):
+        """
+        Create endpoints from the online/offline lists of endpoints populated by the queue
+        processor / endpoint sorter and sends to the storage class
+
+        :return: a storage instance with all online/offline endpoint objects
+        """
+
+        # call the generator to populate endpoint storage
+        payload = self.endpoint_generator(mode)
+
+        return EndpointStorage(payload)
+
+    def endpoint_sorter(self, ip):
+        """
+        # todo change the below
+        Determine if an endpoint is online by attempting to get the "ProductPlatform" xml node associated
+        with that endpoint's IP in the "Status" API group.  If it doesn't time out, then the ep is considered
+        online and the IP + session are passed back up to be added to the online queue.  If it does timeout
+        or the connection is refused, the IP is passed to the offline queue.
+
+        :param ip: endpoint IPv4 address
+        :return: nothing -- add data to respective self.queue
+        """
+        data_copy = self.endpoint_data.copy()  # create fresh data object for each endpoint
+
+        # grab a session using data added to method
+        data_copy['login_url'] = data_copy['login_url'].replace('$ip', ip)
+        data_copy['test_url'] = data_copy['test_url'].replace('$ip', ip)
+        print(f'\tLogging into {ip}...')
+        session = EndpointFactory.add_session(data_copy)
+
+        if session:  # if cart not online, None should be returned as session
+            self.online_queue.append(dict(ip=ip, session=session))
+        else:
+            self.offline_queue.append(ip)
+
+    def endpoint_generator(self, mode):
         """
         Takes a list of endpoint IPs and generates either a...
 
@@ -40,62 +107,46 @@ class EndpointFactory:
             * a mock object (ibid)
 
         ...and returns a dictionary of these objects.
-
-        "Online" = live endpoints
-        "Offline" = mock objects
-        "Unknown" = IP not online and not in mock data .csv file
-
+        :param mode:
         :return: dict()
         """
 
-        endpoints = list()
-        mock_objects = list()
+        online = list()
+        offline = list()
 
-        for ip in self.queue:
-            endpoint = EndpointFactory.create(endpoint_data.copy(), ip)
-            if endpoint:
-                endpoints.append(endpoint)
-            else:
-                mock_objects.append(ip)
+        if mode == 'DEFAULT' or mode == 'ONLINE':
+            for endpoint in self.online_queue:
+                online_endpoint = EndpointFactory.online_ep_generator(endpoint['session'], endpoint['ip'])
+                # self.endpoints_types['online'].append(online_endpoint)  # add new endpoint to storage
+                print(f"\tCreated endpoint for {online_endpoint.name}!")
+                online.append(online_endpoint)  # add new endpoint to storage
 
-        if mock_objects:
-            factory = MockEndpointFactory()
+        # don't need to iterate because mock factory takes a list, not endpoint
+        if self.offline_queue and (mode == 'DEFAULT' or mode == 'OFFLINE'):
+            endpoint_generator = EndpointFactory.offline_ep_generator(MockEndpointFactory())
+            offline_endpoints = endpoint_generator(self.offline_queue)
+            # self.endpoints_types['offline'].append(offline_endpoints['offline'])
+            print(f"\tCreated {len(offline_endpoints['offline'])} offline endpoint(s)!")
+            for offline_endpoint in offline_endpoints['offline']:
+                print(offline_endpoint.name)
+            offline = offline + offline_endpoints['offline']
 
-            endpoint_dict = factory.process_data(mock_objects)
-            endpoint_dict['online'] = endpoints
-
-        else:
-            endpoint_dict = {'online': endpoints}
-
-        return endpoint_dict
+        return dict(online=online, offline=offline)
 
     @staticmethod
-    def create(data, ip, status='Online'):
-        """
-        Create a session, grab the status.xml, and then create an endpoint with attached session and XML data
-        If session can't be created, get help from the mock object factory
+    def offline_ep_generator(mock_factory):
+        return mock_factory.process_data
 
-        :param data: dict of endpoint data
-        :param ip: endpoint IPv4 address
-        :param status: Online/Offline string
-        :return:
-        """
-        # grab a session using data added to method
-        data['login_url'] = data['login_url'].replace('$ip', ip)
-        data['test_url'] = data['test_url'].replace('$ip', ip)
-        print(f'Logging into {ip}...')
-        session = EndpointFactory.add_session(data)
-
-        if not session:  # if cart not online, None should be returned as session
-            return None
+    @staticmethod
+    def online_ep_generator(session, ip):
 
         # get product platform to determine what type of endpoint to make
         status_xml = ET.fromstring(session.get(f'http://{ip}/getxml?location=Status').text)
         endpoint_model = get_xml_value("ProductPlatform", status_xml)[0].text
-        print(f'Endpoint model is {endpoint_model}')
+        # print(f'Endpoint model is {endpoint_model}')
 
-        generator = EndpointFactory._get_generator(endpoint_model)
-        return generator(session, status_xml)
+        online_generator = EndpointFactory._get_generator(endpoint_model)
+        return online_generator(session, status_xml, ip=ip)
 
     @staticmethod
     def add_session(data):
@@ -111,18 +162,12 @@ class EndpointFactory:
             return ValueError(endpoint_model)
 
     @staticmethod
-    def _make_DX(session, status_xml):
-        return DX(session, status_xml)
+    def _make_DX(session, status_xml, ip):
+        return DX(session, status_xml, ip)
 
     @staticmethod
     def _make_SX(session, status_xml):
         return SX()
-
-
-class Endpoint:
-
-    def __init__(self):
-        pass
 
 
 class SessionModule:
@@ -223,14 +268,14 @@ class AuthSession:
                     # print(f'Log in failed with "{user}":"{pw}"')
                     continue  # try next pw
                 except (NewConnectionError, TimeoutError):
-                    print('Connection timed out.')
+                    print('\tERROR: Connection timed out.')
                     break
                 except Exception as e:
-                    print('Max retries with URL... or something else...?')
+                    print('\tERROR: Max retries with URL... or something else...?')
                     break
 
                 # print(f'Log in success with "{user}":"{pw}"')
-                print(f'Logged in succesfully!')
+                # print(f'Logged in succesfully!')
 
                 self.user = user
                 self.password = pw
@@ -296,7 +341,7 @@ class DataFetcher:
 
         # print(f'Fetching data from {self.url}')
         try:
-            return session.get(self.url, timeout=2, allow_redirects=False).status_code
+            return session.get(self.url, timeout=2).status_code
         except requests.ReadTimeout:
             return 401
         except requests.exceptions.ConnectTimeout:
@@ -305,92 +350,59 @@ class DataFetcher:
             return 'REFUSED_CONNECTION'
 
 
-class RoleDefiner:
-
-    # import re
-    # identifiers = {'patient': [identifiers]}
-    # sorter = EndpointSorter(identifiers)
-    # sorted_endpoints = [sorter.get_role(endpoint, add_flag=True) for endpoint in [unsorted_endpoints]]
-
-    def __init__(self, patient_identifiers, provider_types, add_flag):
-        self.patient_identifiers = patient_identifiers
-        self.provider_types = provider_types
-        self.flag = add_flag
-
-    def get_role(self, endpoint):
-
-        # if name not like any identifiers, it must be a provider
-        role = 'provider'
-
-        for identifier in self.patient_identifiers:
-            match = re.search(identifier, endpoint.name)  # it's in the patient_identifiers list...
-            if match:
-                role = 'patient'
-
-        # return {'role': role}
-        return role
-
-    def get_type(self, provider_endpoint):
-
-        type_ = "Unknown"
-
-        for provider_type in self.provider_types:
-            match = re.search(provider_type.upper(), provider_endpoint.name.upper())
-            if match:
-                type_ = match[0]
-
-        # if not in self.provider_types, it's an unknown type
-        return {"type": type_}
-
-
-class EndpointSorter:
-
-    def __init__(self):
-        pass
-
-
-class Directives:
-
-    def __init__(self, input_queue):
-        self.queue = input_queue
-
-    @staticmethod
-    def add_directives():
-        pass
-
+# class Directives:
+#
+#     def __init__(self, **kwargs):
+#         self.directives =
+#
+#     @staticmethod
+#     def add_directives():
+#         pass
+#
 
 if __name__ == '__main__':
 
     # todo TEST if running this when a DX is on gets the proper online vs mock object (run, reboot + run)
 
-    # all_data = MockDataDaemon().pull_all_data()
-    # endpoint_ips = [endpoint['ip'] for endpoint in all_data]
-    role_definer = RoleDefiner(patient_identifiers=['CART', 'DX-PATIENT'],
-                               provider_types=['DX-NS', 'TELEPOD', 'ID-NS', 'TRIAGE'])
-    endpoint_ips = ['10.33.112.74', '10.33.100.145']
-    factory = EndpointFactory(endpoint_ips)
+    all_data = MockDataDaemon().pull_all_data()
+    endpoint_ips = [endpoint['ip'] for endpoint in all_data]
 
-    endpoints = factory.process_queue()
+    # endpoint_ips = [
+    #     '10.33.100.145',  # DX-PATIENT 10 live but "offline"
+    #     '10.33.112.74',  # NS-02 LIVE!!!!!!
+    #     '10.27.200.140',  # my DX
+    #     '10.33.114.35',  # telepod
+    #     '10.33.48.18',  # triage
+    #     '10.33.121.109',  # DX-5C-02
+    # ]
 
+    print("Creating factory...")
+    factory = EndpointFactory(endpoint_ips)  # create factory + pass IPs to queue
+    print("Determining network status of endpoints...")
+    factory.process_queue()  # sort endpoints into online / offline queues
+    print("\nSorting + packaging endpoints...")
+    package = factory.package_endpoints()  # process queues and put into endpoint container
+    print("\nCreating TeleportProvisioner...")
+    provisioner = TeleportProvisioner()  # create provisioner to outfit endpoints for Teleport work
+    print("Provisioning endpoints with types/roles...")
+    provisioner.typify(package.online + package.offline)  # add Teleport types / roles to endpoints
+    print("Provisioning endpoints with directives/favorites...\n")
 
-    # with open('testing/status.xml', 'r') as f:
-    #     root = ET.fromstring(f.read())
-    #
-    # thisthat = get_nested_xml(root, 'UserInterface', 'ContactInfo', 'Name')
+    """for pretty printing"""
+    lengths = [len(ep.name) for ep in package.online]
+    long_name = max(lengths)
 
-    # thisthat = EndpointFactory(data=endpoint_data, ip=ip)
-    # resp = thisthat.post(f'http://{ip}/web/signin/open', headers=headers)
-    # type_ = thisthat.get(f'http://{ip}/getxml?location=Status', headers={'Content-Type': 'application/xml'})
-    # type_ = ET.fromstring(type_.text)
-    # target = "ProductPlatform"
+    for endpoint in package.online:  # currently, online providers are the only endpoints that get directives
+        provisioner.add_directives(endpoint)  # add directives depending on role + type
+        favorites = provisioner.define_favorites(endpoint)  # create favorites "to-be-added" to endpoint
+        # print(favorites, f' for {endpoint.name}, {endpoint.type}')
+        if favorites:
+            endpoint.collect_favorites(package.online + package.offline, favorites)
+            print(f"\t{endpoint.name}{'.' * (long_name - len(endpoint.name))}.. ({len(endpoint._favorites)}) favorites, ({len(endpoint.directives)}) directives")
 
-    # iurl = 'http://$ip/web/signin/open'
-    #
-    # endpoint_data = {'login_url': iurl, 'ip': ip}
+    print(f"\n{len(package.online)} Teleports are locked and loaded!")
 
+    myDX = package.online[-1]
 
-# if online, check what type of object it is
-#     logon, get ProductPlatform from status
-#     create object based on result
-#     store status xml with object
-# if offline, get last known type from csv list and make mock object
+# todo refresh offline endpoints to see if they're online again instead of having to run the whole thing over again
+
