@@ -12,17 +12,21 @@ class Endpoint:
         headers=xml_dict['headers'],
     )
 
-    def __init__(self, ip='0.0.0.0', name="No name provided", call_string="", user='admin', password='admin456', testing=False):
+    def __init__(self, session, status_xml, ip='0.0.0.0', name="No name provided", testing=False):
         self.ip = ip
-        self.call_string = call_string
-        self.user = user
-        self.password = password
+        # self.call_string = call_string
+        # self.user = user
+        # self.password = password
+        self.xml_lib = dict()
+        self.xml_lib['status'] = status_xml
         self.soundbank = SoundBank()
         self.ringtone = self.soundbank.get_ringtone()
         self.name = name
-        if not testing:
-            self.session = requests.session()
-            self.login()
+        self.session = session
+        self.status_xml = status_xml
+
+        # these will be defined by the role definer / provisioner post instantiation
+        self._role, self._type, self.directives, self._favorites = None, None, None, list()
 
     # def __repr__(self):
     #     if self.call_string: return self.call_string
@@ -41,9 +45,10 @@ class Endpoint:
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)
 
-    def add_all_favorites(self, favorites):
-        for favorite in favorites:
+    def add_all_favorites(self):
+        for favorite in self._favorites:
             self.add_contact(favorite.name, favorite.call_string)
+        print(f'{self.name} - favorites added!')
 
     def delete_contact(self, contact_id):
         xml = xml_dict['commands']['contact_delete']
@@ -57,6 +62,7 @@ class Endpoint:
         headers = xml_dict['headers']
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)
+        print(f'{self.name} - call history deleted!')
 
     def phonebook_search(self, search_str="", contact_type='Any', limit='100'):
         xml = xml_dict['commands']['phonebook_search']
@@ -77,6 +83,7 @@ class Endpoint:
         contacts_list = self.phonebook_search()
         for contact in contacts_list:
             self.delete_contact(contact.find('ContactId').text)
+        print(f'{self.name} - contacts deleted!')
 
     def set_call_string(self, value):
         self.call_string = value

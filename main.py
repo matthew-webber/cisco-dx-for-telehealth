@@ -47,12 +47,7 @@ def point_all_to_cucm(dx_list):
 # ca300 = SX(ip='10.33.48.163', password='admin456')
 # michael_cart = SX('128.23.200.77')
 # cth750 = SX('128.23.27.109')
-# ttt750 = SX('10.33.108.74')
-
-# davidsDX = DX('128.23.200.189')
-# richardsDX = DX('128.23.200.158')
-# wendysDX = DX('128.23.200.16')
-
+ttt750 = SX('10.33.108.74')
 
 # myDX = DX('10.27.200.140', password='')
 

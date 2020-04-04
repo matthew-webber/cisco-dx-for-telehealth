@@ -2,6 +2,7 @@ from endpoints.endpoint_shared import Endpoint
 from dicts import *
 import xml.etree.ElementTree as ET
 from direct_commands import *
+from ixml import *
 
 
 # DX cluster class
@@ -21,14 +22,42 @@ class DXCluster:
 
 class DX(Endpoint):
 
-    def __init__(self, ip, password="admin456"):
-        super().__init__(ip=ip, password=password)
-        self.call_string = ''
-        self.name = ''
-        self.set_call_string(self.get_call_string())
+    def __init__(self, session, status_xml, ip):
+        super().__init__(session=session, status_xml=status_xml, ip=ip)
+        self.name = self.get_name_2()[0].text
+        self.call_string = self.get_call_string_2()[0].text
+
+
+    @property
+    def role(self):
+        return self._role
+
+    @role.setter
+    def role(self, role):
+        self._role = role
+
+    @property
+    def type(self):
+        return self._type
+
+    @type.setter
+    def type(self, type_):
+        self._type = type_
+
+        # self.set_call_string(self.get_call_string())
         # print(f'my call string is {self.call_string}')
-        self.set_device_name(self.get_device_name())
+        # self.set_device_name(self.get_device_name())
         # print(f'my name is {self.name}')
+
+    def execute_directives(self):
+        for directive in self.directives.values():
+            directive(self)
+
+    def get_name_2(self):
+        return get_nested_xml(self.xml_lib.get('status'), "ContactInfo/Name")
+
+    def get_call_string_2(self):
+        return get_nested_xml(self.xml_lib.get('status'), 'Registration/URI')
 
     def get_device_name(self):
         URL_suffix = xml_dict['status']['device_name']
@@ -38,6 +67,12 @@ class DX(Endpoint):
         # now parse the response -- this needs to go elsewhere
         root = ET.fromstring(response.text)
         return root[0][0][0].text
+
+    # todo add UPDATE FAVORITES method + move to shared object???
+    def collect_favorites(self, endpoints, favorite_types):
+        for endpoint in endpoints:
+            if endpoint.type in favorite_types:
+                self._favorites.append(endpoint)
 
     def get_call_string(self):
         URL_suffix = xml_dict['status']['call_string']
@@ -77,6 +112,7 @@ class DX(Endpoint):
 
     def display_covid_alert(self, path):
         self.display_alert(get_COVID_alert(self, alert_txt_file=path), "Information", 0)
+        print(f'{self.name} - alert displayed!')
 
     def display_prompt(self, text, options: list, feedbackid='', title=''):
         xml = xml_dict['userinterface']['prompt']
@@ -95,12 +131,9 @@ class DX(Endpoint):
         url = url_dict['post_xml'].replace('{{}}', self.ip)
         self.session.post(url, xml, headers=headers)
 
+
 if __name__ == "__main__":
 
     myDX = DX('10.27.200.140', password='')
 
     call_string = myDX.get_device_name()
-
-
-
-

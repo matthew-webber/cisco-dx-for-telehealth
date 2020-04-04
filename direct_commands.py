@@ -1,6 +1,22 @@
 import time
 from string import Template
 
+#todo
+# setup a 'timeout' capability otherwise this thing will hang if the object isn't on the network
+# add a DX factory
+# add a way to dynamically get the name of the DX using APIs
+# close the session To close a session after use, issue a POST to
+# http://<ip-address>/xmlapi/session/end with the provided
+# cookie.
+
+# todo -- need to find a way to get value from XML returned by using GET
+#todo -- SyntaxError: leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers
+# this happens when calling "add contact" with 007 as the argument for "number"
+
+
+
+# todo ******make the below object methods******
+
 
 def get_COVID_alert(DX_obj, alert_txt_file="/Users/webber/PycharmProjects/cisco_API/DX_alert_msg.txt"):
     with open(alert_txt_file, "r") as f:
@@ -22,6 +38,9 @@ def echo_bomb(target, attacker):
     time.sleep(3)
     target.delete_callhistory()
 
+
+musc_vidyo = '112453@vidyo.musc.edu'
+pspn_vidyo = '102007@vidyo.pspnsc.org'
 
 # r = requests.session()
 # r2 = requests.session()
@@ -45,6 +64,25 @@ def sound_bomb(targets, sound, sleep=0, loops=10):
 
         target.stop_sound()
         target.set_volume(50)
+
+class DummyDX:
+
+    def __init__(self, ip, name, call_string):
+        self.ip = ip
+        self.name = name
+        self.call_string = call_string
+
+
+def clear_all_alerts(DXs):
+    for DX_ in DXs:
+        DX_.display_alert('')
+
+
+def point_all_to_CUCM(DXs):
+    for DX_ in DXs:
+        DX_.set_external_manager_address('128.23.1.36')
+        DX_.set_provisioning_mode('CUCM')
+        DX_.reboot()
 
 # def repeat_bomb():
 #     # vol_dir = 'up'
