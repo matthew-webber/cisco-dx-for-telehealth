@@ -406,3 +406,21 @@ if __name__ == '__main__':
 
 # todo refresh offline endpoints to see if they're online again instead of having to run the whole thing over again
 
+'''
+Wishlist:
+
+1. Refresh "offline" endpoints
+        
+        Pull up a list of offline endpoints ("status check") and then choose to refresh either all ("refresh all") or 
+        refresh a specific endpoint ("refresh <index of endpoint from status check list>").  The objects would be
+        checked again and moved from offline > online if necessary.
+        
+2. Check for conflicts b/t .csv file and live endpoint data
+
+        Compare / contrast the data associated with an IP address across the .csv file and the data in a live endpoint.
+        If a discrepancy is found, print the discrepancy and ask user if they want to update the .csv file or the
+        endpoint itself using API calls (feel like this would be rare because the .csv is likely to be the inaccurate
+        one).
+        
+'''
+
