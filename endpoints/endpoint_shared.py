@@ -5,6 +5,20 @@ import testing.login as login_test
 import time
 
 
+class Cluster:
+
+    def __init__(self, role):
+        self._role = role
+
+    @property
+    def role(self):
+        return self._role
+
+    @role.setter
+    def role(self, role):
+        self._role = role
+
+
 class Endpoint:
 
     test_login = dict(

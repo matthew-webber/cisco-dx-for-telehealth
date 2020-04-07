@@ -35,5 +35,7 @@ if __name__ == '__main__':
     with open('testing/status.xml') as f:
         ixml = ET.fromstring(f.read())
 
-    assert '29823@cucm.musc.edu' == get_nested_xml(ixml, "Registration/URI")[0].text,\
-        f"Registration/URI should equal 29823 for David's DX80"
+    callstring = get_nested_xml(ixml, "Registration/URI")[0].text
+    a = get_nested_xml(ixml, "Software/DisplayName")[0].text
+
+    # assert callstring == '29823@cucm.musc.edu' f"Registration/URI should equal 29823 for David's DX80"
