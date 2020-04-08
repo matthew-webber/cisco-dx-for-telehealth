@@ -49,26 +49,7 @@ if __name__ == '__main__':
 
 '''        
     
-    print("\nCreating TeleportProvisioner...")
-    print("Provisioning endpoints with types/roles...")
-    print("Provisioning endpoints with directives/favorites...\n")
-
-    """for pretty printing"""
-    lengths = [len(ep.name) for ep in package.online]
-    long_name = max(lengths)
-
-    for endpoint in package.online:  # currently, online providers are the only endpoints that get directives
-        provisioner.add_directives(endpoint)  # add directives depending on role + type
-        favorites = provisioner.define_favorites(endpoint)  # create favorites "to-be-added" to endpoint
-        # print(favorites, f' for {endpoint.name}, {endpoint.type}')
-        if favorites:
-            endpoint.collect_favorites(package.online + package.offline, favorites)
-            print(f"\t{endpoint.name}{'.' * (long_name - len(endpoint.name))}.. ({len(endpoint._favorites)}) favorites, ({len(endpoint.directives)}) directives")
-
-    print(f"\n{len(package.online)} Teleports are locked and loaded!")
-
-    myDX = package.online[-1]
-
+   
 # todo refresh offline endpoints to see if they're online again instead of having to run the whole thing over again
 
 '''

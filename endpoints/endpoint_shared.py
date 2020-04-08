@@ -3,6 +3,7 @@ from dicts import *
 import xml.etree.ElementTree as ET
 import testing.login as login_test
 import time
+from ixml import *
 
 
 class Cluster:
@@ -26,16 +27,22 @@ class Endpoint:
         headers=xml_dict['headers'],
     )
 
-    def __init__(self, session, status_xml, ip='0.0.0.0', name="No name provided", testing=False):
-        self.ip = ip
-        # self.call_string = call_string
-        # self.user = user
-        # self.password = password
+    def __init__(self, session, status_xml, **kwargs):
         self.xml_lib = dict()
         self.xml_lib['status'] = status_xml
+
+        if not kwargs.get('name'):
+            self.name = self.get_device_name()
+
+        if not kwargs.get('call_string'):
+            self.callstring = self.get_call_string()
+
+        self.ip = kwargs.get('ip')
+        # self.user = user
+        # self.password = password
         self.soundbank = SoundBank()
         self.ringtone = self.soundbank.get_ringtone()
-        self.name = name
+
         self.session = session
         self.status_xml = status_xml
 
@@ -45,6 +52,12 @@ class Endpoint:
     # def __repr__(self):
     #     if self.call_string: return self.call_string
     #     else: pass
+
+    def get_device_name(self):
+        return get_nested_xml(self.xml_lib.get('status'), "ContactInfo/Name")[0].text
+
+    def get_call_string(self):
+        return get_nested_xml(self.xml_lib.get('status'), 'Registration/URI')[0].text
 
     def add_contact(self, name, number, protocol='Auto', call_rate='0', call_type='Video', tag='Favorite', device='Video'):
         xml = xml_dict['commands']['contact_add']

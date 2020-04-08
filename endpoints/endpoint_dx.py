@@ -2,8 +2,6 @@ from endpoints.endpoint_shared import Endpoint
 from dicts import *
 import xml.etree.ElementTree as ET
 from direct_commands import *
-from ixml import *
-
 
 # DX cluster class
 
@@ -24,9 +22,6 @@ class DX(Endpoint):
 
     def __init__(self, session, status_xml, ip):
         super().__init__(session=session, status_xml=status_xml, ip=ip)
-        self.name = self.get_name_2()[0].text
-        self.call_string = self.get_call_string_2()[0].text
-
 
     @property
     def role(self):
@@ -48,41 +43,11 @@ class DX(Endpoint):
         for directive in self.directives.values():
             directive(self)
 
-    def get_name_2(self):
-        return get_nested_xml(self.xml_lib.get('status'), "ContactInfo/Name")
-
-    def get_call_string_2(self):
-        return get_nested_xml(self.xml_lib.get('status'), 'Registration/URI')
-
-    def get_device_name(self):
-        URL_suffix = xml_dict['status']['device_name']
-        headers = xml_dict['headers']
-        url = url_dict['get_xml'].replace('{{}}', self.ip) + URL_suffix
-        response = self.session.get(url, headers=headers)
-        # now parse the response -- this needs to go elsewhere
-        root = ET.fromstring(response.text)
-        return root[0][0][0].text
-
     # todo add UPDATE FAVORITES method + move to shared object???
     def collect_favorites(self, endpoints, favorite_types):
         for endpoint in endpoints:
             if endpoint.type in favorite_types:
                 self._favorites.append(endpoint)
-
-    def get_call_string(self):
-        URL_suffix = xml_dict['status']['call_string']
-        headers = xml_dict['headers']
-        url = url_dict['get_xml'].replace('{{}}', self.ip) + URL_suffix
-        response = self.session.get(url, headers=headers)
-        while response.status_code == 401:
-            response = self.session.get(url, headers=headers)
-        #     SessionTester(session, url, headers) -->
-        #     return session
-        #       while SessionTester not True: continue, else: input("New pw")
-        #       if input == "q!", quit, else session = SessionUpdater(pw)
-        # now parse the response -- this needs to go elsewhere
-        root = ET.fromstring(response.text)
-        return root[0][0][0].text
 
     def reboot(self):
         xml = xml_dict['DX']['commands']['reboot']
@@ -128,7 +93,4 @@ class DX(Endpoint):
 
 
 if __name__ == "__main__":
-
-    myDX = DX('10.27.200.140', password='')
-
-    call_string = myDX.get_device_name()
+    pass
