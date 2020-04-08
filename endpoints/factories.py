@@ -6,7 +6,8 @@ from ixml import *
 from endpoints.endpoint_mock import MockEndpoint
 from builders.session import *
 from multiprocessing.pool import ThreadPool
-from time import sleep
+from time import sleep, perf_counter
+from helpers.test_objects import Session as s
 
 
 class EndpointFactory:
@@ -109,7 +110,7 @@ class EndpointFactory:
             * a mock object (ibid)
 
         ...and returns a dictionary of these objects.
-        :param mode:
+        :param mode: switch to package online/offline/both endpoint types
         :return: dict()
         """
 
@@ -142,8 +143,11 @@ class EndpointFactory:
     @staticmethod
     def online_ep_generator(session, ip):
 
+        if os.environ['PROJECT_STATUS'] == 'TESTING':  # override
+            session = s()
+
         # get product platform to determine what type of endpoint to make
-        status_xml = ET.fromstring(session.get(f'http://{ip}/getxml?location=Status').text)
+        status_xml = ET.fromstring(session.get(url=f'http://{ip}/getxml?location=Status').text)
         endpoint_model = get_xml_value("ProductPlatform", status_xml)[0].text
         # print(f'Endpoint model is {endpoint_model}')
 
@@ -216,7 +220,11 @@ if __name__ == '__main__':
     endpoint_ips = [endpoint['ip'] for endpoint in all_data]
     # endpoint_ips = ['10.33.155.0', '10.33.110.0', '10.33.110.200']
 
-    factory = EndpointFactory(endpoint_ips)
+    factory = EndpointFactory(endpoint_ips[:5])
 
     factory.process_queue(multiprocessor=True)
+    x = factory.package_endpoints()
+
+    print(f'Main done in {round(perf_counter(), 2)}')
+
 

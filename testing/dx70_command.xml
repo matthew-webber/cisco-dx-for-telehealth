@@ -1,0 +1,2029 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Command product="Cisco Codec" version="ce9.1.4.3ae3106" apiVersion="4">
+  <Audio read="Admin;Integrator;User">
+    <Diagnostics read="Admin;User">
+      <MeasureDelay command="True" role="Admin;User" read="Admin;User">
+        <MeasurementLength item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_100" type="Integer" min="1" max="100">
+          <Valuespace>
+            <Max>100</Max>
+            <Min>1</Min>
+          </Valuespace>
+        </MeasurementLength>
+        <Output item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_AudioDiagnosticsOutput_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>HDMI</Value>
+            <Value>Line</Value>
+            <Value>Internal</Value>
+            <Value>All</Value>
+          </ValueSpace>
+        </Output>
+        <Volume item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_50" type="Integer" min="0" max="50">
+          <Valuespace>
+            <Max>50</Max>
+            <Min>0</Min>
+          </Valuespace>
+        </Volume>
+      </MeasureDelay>
+    </Diagnostics>
+    <Microphones read="Integrator;User">
+      <Mute command="True" role="Integrator;User" read="Integrator;User"/>
+      <ToggleMute command="True" role="Integrator;User" read="Integrator;User"/>
+      <Unmute command="True" role="Integrator;User" read="Integrator;User"/>
+    </Microphones>
+    <Select command="True" role="Admin;User" read="Admin;User">
+      <Device item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_AudioDevice_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Internal</Value>
+          <Value>HeadsetBluetooth</Value>
+          <Value>HeadsetUSB</Value>
+          <Value>HeadsetAnalog</Value>
+          <Value>HandsetUSB</Value>
+        </ValueSpace>
+      </Device>
+    </Select>
+    <Sound read="Integrator;User">
+      <Play command="True" role="Integrator;User" read="Integrator;User">
+        <Loop item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_OnOff_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>On</Value>
+            <Value>Off</Value>
+          </ValueSpace>
+        </Loop>
+        <Sound item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_Sound_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Alert</Value>
+            <Value>Bump</Value>
+            <Value>Busy</Value>
+            <Value>CallDisconnect</Value>
+            <Value>CallInitiate</Value>
+            <Value>CallWaiting</Value>
+            <Value>Dial</Value>
+            <Value>KeyInput</Value>
+            <Value>KeyInputDelete</Value>
+            <Value>KeyTone</Value>
+            <Value>Nav</Value>
+            <Value>NavBack</Value>
+            <Value>Notification</Value>
+            <Value>OK</Value>
+            <Value>PresentationConnect</Value>
+            <Value>Ringing</Value>
+            <Value>SignIn</Value>
+            <Value>SpecialInfo</Value>
+            <Value>TelephoneCall</Value>
+            <Value>VideoCall</Value>
+            <Value>VolumeAdjust</Value>
+            <Value>WakeUp</Value>
+          </ValueSpace>
+        </Sound>
+      </Play>
+      <Stop command="True" role="Integrator;User" read="Integrator;User"/>
+    </Sound>
+    <SoundsAndAlerts read="Integrator;User">
+      <Ringtone read="Integrator;User">
+        <List command="True" role="Integrator;User" read="Integrator;User"/>
+        <Play command="True" role="Integrator;User" read="Integrator;User">
+          <RingTone item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_1_100" type="String" minlength="1" maxlength="100">
+            <Valuespace>
+              <MaxLength>100</MaxLength>
+              <MinLength>1</MinLength>
+            </Valuespace>
+          </RingTone>
+        </Play>
+      </Ringtone>
+    </SoundsAndAlerts>
+    <Volume read="Admin;User">
+      <Decrease command="True" role="Admin;User" read="Admin;User">
+        <Device item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_AudioDevice_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Internal</Value>
+            <Value>HeadsetBluetooth</Value>
+            <Value>HeadsetUSB</Value>
+            <Value>HeadsetAnalog</Value>
+            <Value>HandsetUSB</Value>
+          </ValueSpace>
+        </Device>
+        <Steps item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_10" type="Integer" min="1" max="10">
+          <Valuespace>
+            <Max>10</Max>
+            <Min>1</Min>
+          </Valuespace>
+        </Steps>
+      </Decrease>
+      <Increase command="True" role="Admin;User" read="Admin;User">
+        <Device item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_AudioDevice_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Internal</Value>
+            <Value>HeadsetBluetooth</Value>
+            <Value>HeadsetUSB</Value>
+            <Value>HeadsetAnalog</Value>
+            <Value>HandsetUSB</Value>
+          </ValueSpace>
+        </Device>
+        <Steps item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_10" type="Integer" min="1" max="10">
+          <Valuespace>
+            <Max>10</Max>
+            <Min>1</Min>
+          </Valuespace>
+        </Steps>
+      </Increase>
+      <Mute command="True" role="Admin;User" read="Admin;User"/>
+      <Set command="True" role="Admin;User" read="Admin;User">
+        <Device item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_AudioDevice_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Internal</Value>
+            <Value>HeadsetBluetooth</Value>
+            <Value>HeadsetUSB</Value>
+            <Value>HeadsetAnalog</Value>
+            <Value>HandsetUSB</Value>
+          </ValueSpace>
+        </Device>
+        <Level item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_0_100" type="Integer" min="0" max="100">
+          <Valuespace>
+            <Max>100</Max>
+            <Min>0</Min>
+          </Valuespace>
+        </Level>
+      </Set>
+      <SetToDefault command="True" role="Admin;User" read="Admin;User">
+        <Device item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_AudioDevice_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Internal</Value>
+            <Value>HeadsetBluetooth</Value>
+            <Value>HeadsetUSB</Value>
+            <Value>HeadsetAnalog</Value>
+            <Value>HandsetUSB</Value>
+          </ValueSpace>
+        </Device>
+      </SetToDefault>
+      <ToggleMute command="True" role="Admin;User" read="Admin;User"/>
+      <Unmute command="True" role="Admin;User" read="Admin;User"/>
+    </Volume>
+    <VuMeter read="Admin;User">
+      <Start command="True" role="Admin;User" read="Admin;User">
+        <ConnectorId item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_1_8" type="Integer" min="1" max="8">
+          <Valuespace>
+            <Max>8</Max>
+            <Min>1</Min>
+          </Valuespace>
+        </ConnectorId>
+        <ConnectorType item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_ConnectorType_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>HDMI</Value>
+            <Value>Line</Value>
+            <Value>Microphone</Value>
+          </ValueSpace>
+        </ConnectorType>
+        <IncludePairingQuality item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_OnOff_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>On</Value>
+            <Value>Off</Value>
+          </ValueSpace>
+        </IncludePairingQuality>
+      </Start>
+      <Stop command="True" role="Admin;User" read="Admin;User">
+        <ConnectorId item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_1_8" type="Integer" min="1" max="8">
+          <Valuespace>
+            <Max>8</Max>
+            <Min>1</Min>
+          </Valuespace>
+        </ConnectorId>
+        <ConnectorType item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_ConnectorType_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>HDMI</Value>
+            <Value>Line</Value>
+            <Value>Microphone</Value>
+          </ValueSpace>
+        </ConnectorType>
+      </Stop>
+      <StopAll command="True" role="Admin;User" read="Admin;User"/>
+    </VuMeter>
+  </Audio>
+  <Bookings read="Admin;User">
+    <Clear command="True" role="Admin;User" read="Admin;User"/>
+    <Get command="True" role="Admin;User" read="Admin;User">
+      <Id item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_128" type="String" minlength="0" maxlength="128">
+        <Valuespace>
+          <MaxLength>128</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </Id>
+    </Get>
+    <List command="True" role="Admin;User" read="Admin;User">
+      <DayOffset item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_365" type="Integer" min="0" max="365">
+        <Valuespace>
+          <Max>365</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </DayOffset>
+      <Days item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_365" type="Integer" min="1" max="365">
+        <Valuespace>
+          <Max>365</Max>
+          <Min>1</Min>
+        </Valuespace>
+      </Days>
+      <Limit item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_65534" type="Integer" min="1" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>1</Min>
+        </Valuespace>
+      </Limit>
+      <Offset item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </Offset>
+    </List>
+  </Bookings>
+  <Call read="Admin;User">
+    <Accept command="True" role="Admin;User" read="Admin;User">
+      <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </CallId>
+    </Accept>
+    <DTMFSend command="True" role="Admin;User" read="Admin;User">
+      <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </CallId>
+      <DTMFString item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_32" type="String" minlength="0" maxlength="32">
+        <Valuespace>
+          <MaxLength>32</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </DTMFString>
+    </DTMFSend>
+    <Disconnect command="True" role="Admin;User" read="Admin;User">
+      <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </CallId>
+    </Disconnect>
+    <FarEndControl read="Admin;User">
+      <Camera read="Admin;User">
+        <Move command="True" role="Admin;User" read="Admin;User">
+          <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+            <Valuespace>
+              <Max>65534</Max>
+              <Min>0</Min>
+            </Valuespace>
+          </CallId>
+          <Value item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_FeccDirection_1" type="Literal">
+            <ValueSpace type="Literal">
+              <Value>Left</Value>
+              <Value>Right</Value>
+              <Value>Up</Value>
+              <Value>Down</Value>
+              <Value>ZoomIn</Value>
+              <Value>ZoomOut</Value>
+            </ValueSpace>
+          </Value>
+        </Move>
+        <Stop command="True" role="Admin;User" read="Admin;User">
+          <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+            <Valuespace>
+              <Max>65534</Max>
+              <Min>0</Min>
+            </Valuespace>
+          </CallId>
+        </Stop>
+      </Camera>
+      <RoomPreset read="Admin;User">
+        <Activate command="True" role="Admin;User" read="Admin;User">
+          <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+            <Valuespace>
+              <Max>65534</Max>
+              <Min>0</Min>
+            </Valuespace>
+          </CallId>
+          <PresetId item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_1_15" type="Integer" min="1" max="15">
+            <Valuespace>
+              <Max>15</Max>
+              <Min>1</Min>
+            </Valuespace>
+          </PresetId>
+        </Activate>
+      </RoomPreset>
+      <Source read="Admin;User">
+        <Select command="True" role="Admin;User" read="Admin;User">
+          <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+            <Valuespace>
+              <Max>65534</Max>
+              <Min>0</Min>
+            </Valuespace>
+          </CallId>
+          <SourceId item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_0_15" type="Integer" min="0" max="15">
+            <Valuespace>
+              <Max>15</Max>
+              <Min>0</Min>
+            </Valuespace>
+          </SourceId>
+        </Select>
+      </Source>
+    </FarEndControl>
+    <Forward command="True" role="Admin;User" read="Admin;User">
+      <DisplayName item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+        <Valuespace>
+          <MaxLength>255</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </DisplayName>
+      <Number item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+        <Valuespace>
+          <MaxLength>255</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </Number>
+    </Forward>
+    <Hold command="True" role="Admin;User" read="Admin;User">
+      <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </CallId>
+      <Reason item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_HoldReason_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Conference</Value>
+          <Value>Transfer</Value>
+          <Value>Other</Value>
+        </ValueSpace>
+      </Reason>
+    </Hold>
+    <Ignore command="True" role="Admin;User" read="Admin;User">
+      <CallId item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </CallId>
+    </Ignore>
+    <Join command="True" role="Admin;User" read="Admin;User">
+      <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_intArray_0_65534_10" multiple="10" type="IntegerArray" min="0" max="65534"/>
+    </Join>
+    <Reject command="True" role="Admin;User" read="Admin;User">
+      <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </CallId>
+    </Reject>
+    <Resume command="True" role="Admin;User" read="Admin;User">
+      <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </CallId>
+    </Resume>
+    <UnattendedTransfer command="True" role="Admin;User" read="Admin;User">
+      <CallId item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </CallId>
+      <Number item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+        <Valuespace>
+          <MaxLength>255</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </Number>
+    </UnattendedTransfer>
+  </Call>
+  <CallHistory read="Admin;User">
+    <AcknowledgeAllMissedCalls command="True" role="Admin;User" read="Admin;User"/>
+    <AcknowledgeMissedCall command="True" role="Admin;User" read="Admin;User">
+      <AcknowledgeConsecutiveDuplicates item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_TrueFalse_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>False</Value>
+          <Value>True</Value>
+        </ValueSpace>
+      </AcknowledgeConsecutiveDuplicates>
+      <CallHistoryId item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_1_2147483647" type="Integer" min="1" max="2147483647">
+        <Valuespace>
+          <Max>2147483647</Max>
+          <Min>1</Min>
+        </Valuespace>
+      </CallHistoryId>
+    </AcknowledgeMissedCall>
+    <DeleteAll command="True" role="Admin;User" read="Admin;User">
+      <Filter item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_DeleteFilter_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>All</Value>
+          <Value>Missed</Value>
+          <Value>Placed</Value>
+          <Value>Received</Value>
+        </ValueSpace>
+      </Filter>
+    </DeleteAll>
+    <DeleteEntry command="True" role="Admin;User" read="Admin;User">
+      <CallHistoryId item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_1_2147483647" type="Integer" min="1" max="2147483647">
+        <Valuespace>
+          <Max>2147483647</Max>
+          <Min>1</Min>
+        </Valuespace>
+      </CallHistoryId>
+      <DeleteConsecutiveDuplicates item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_TrueFalse_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>False</Value>
+          <Value>True</Value>
+        </ValueSpace>
+      </DeleteConsecutiveDuplicates>
+    </DeleteEntry>
+    <Get command="True" role="Admin;User" read="Admin;User">
+      <CallHistoryId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </CallHistoryId>
+      <DetailLevel item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_DetailLevel_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Basic</Value>
+          <Value>Full</Value>
+        </ValueSpace>
+      </DetailLevel>
+      <Filter item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_HistorySearchFilter_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>All</Value>
+          <Value>Missed</Value>
+          <Value>AnsweredElsewhere</Value>
+          <Value>Forwarded</Value>
+          <Value>Placed</Value>
+          <Value>NoAnswer</Value>
+          <Value>Received</Value>
+          <Value>Rejected</Value>
+          <Value>UnacknowledgedMissed</Value>
+        </ValueSpace>
+      </Filter>
+      <Limit item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </Limit>
+      <Offset item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </Offset>
+      <SearchString item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+        <Valuespace>
+          <MaxLength>255</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </SearchString>
+    </Get>
+    <Recents command="True" role="Admin;User" read="Admin;User">
+      <DetailLevel item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_DetailLevel_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Basic</Value>
+          <Value>Full</Value>
+        </ValueSpace>
+      </DetailLevel>
+      <Filter item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_HistorySearchFilter_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>All</Value>
+          <Value>Missed</Value>
+          <Value>AnsweredElsewhere</Value>
+          <Value>Forwarded</Value>
+          <Value>Placed</Value>
+          <Value>NoAnswer</Value>
+          <Value>Received</Value>
+          <Value>Rejected</Value>
+          <Value>UnacknowledgedMissed</Value>
+        </ValueSpace>
+      </Filter>
+      <Limit item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </Limit>
+      <Offset item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </Offset>
+      <Order item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_HistorySearchOrder_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>OccurrenceTime</Value>
+          <Value>OccurrenceFrequency</Value>
+        </ValueSpace>
+      </Order>
+      <SearchString item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+        <Valuespace>
+          <MaxLength>255</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </SearchString>
+    </Recents>
+  </CallHistory>
+  <Camera>
+    <Preset>
+      <Snapshot/>
+    </Preset>
+  </Camera>
+  <Cameras/>
+  <Conference read="Admin;User">
+    <DoNotDisturb read="Admin;User">
+      <Activate command="True" role="Admin;User" read="Admin;User">
+        <Timeout item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_1440" type="Integer" min="1" max="1440">
+          <Valuespace>
+            <Max>1440</Max>
+            <Min>1</Min>
+          </Valuespace>
+        </Timeout>
+      </Activate>
+      <Deactivate command="True" role="Admin;User" read="Admin;User"/>
+    </DoNotDisturb>
+    <SpeakerLock read="Admin;User">
+      <Release command="True" role="Admin;User" read="Admin;User"/>
+      <Set command="True" role="Admin;User" read="Admin;User">
+        <CallId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+          <Valuespace>
+            <Max>65534</Max>
+            <Min>0</Min>
+          </Valuespace>
+        </CallId>
+        <Target item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_ConfSpeakerTarget_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Local</Value>
+            <Value>Remote</Value>
+          </ValueSpace>
+        </Target>
+      </Set>
+    </SpeakerLock>
+  </Conference>
+  <Diagnostics read="Admin;User">
+    <Run command="True" role="Admin" read="Admin">
+      <ResultSet item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_Result_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Alerts</Value>
+          <Value>All</Value>
+          <Value>None</Value>
+        </ValueSpace>
+      </ResultSet>
+    </Run>
+  </Diagnostics>
+  <Dial command="True" role="Admin;User" read="Admin;User">
+    <Appearance item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_999999999" type="Integer" min="1" max="999999999">
+      <Valuespace>
+        <Max>999999999</Max>
+        <Min>1</Min>
+      </Valuespace>
+    </Appearance>
+    <BookingId item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+      <Valuespace>
+        <MaxLength>255</MaxLength>
+        <MinLength>0</MinLength>
+      </Valuespace>
+    </BookingId>
+    <CallRate item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_64_3072" type="Integer" min="64" max="3072">
+      <Valuespace>
+        <Max>3072</Max>
+        <Min>64</Min>
+      </Valuespace>
+    </CallRate>
+    <CallType item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_CallType_1" type="Literal">
+      <ValueSpace type="Literal">
+        <Value>Audio</Value>
+        <Value>Video</Value>
+      </ValueSpace>
+    </CallType>
+    <DisplayName item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+      <Valuespace>
+        <MaxLength>255</MaxLength>
+        <MinLength>0</MinLength>
+      </Valuespace>
+    </DisplayName>
+    <Number item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+      <Valuespace>
+        <MaxLength>255</MaxLength>
+        <MinLength>0</MinLength>
+      </Valuespace>
+    </Number>
+    <Protocol item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_CallProtocol_1" type="Literal">
+      <ValueSpace type="Literal">
+        <Value>H320</Value>
+        <Value>H323</Value>
+        <Value>Sip</Value>
+        <Value>Spark</Value>
+      </ValueSpace>
+    </Protocol>
+  </Dial>
+  <Experimental read="Admin;User">
+    <Audio/>
+    <Camera/>
+  </Experimental>
+  <GPIO>
+    <ManualState/>
+  </GPIO>
+  <HttpFeedback read="Admin">
+    <Deregister command="True" role="Admin" read="Admin">
+      <FeedbackSlot item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_1_4" type="Integer" min="1" max="4">
+        <Valuespace>
+          <Max>4</Max>
+          <Min>1</Min>
+        </Valuespace>
+      </FeedbackSlot>
+    </Deregister>
+    <Register command="True" role="Admin" read="Admin">
+      <Expression item="1" required="False" valueSpaceRef="/Valuespace/Vs_stringArray_1_255_15" type="StringArray" multiple="15" minlength="1" maxlength="255"/>
+      <FeedbackSlot item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_1_4" type="Integer" min="1" max="4">
+        <Valuespace>
+          <Max>4</Max>
+          <Min>1</Min>
+        </Valuespace>
+      </FeedbackSlot>
+      <Format item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_HttpFeedbackFormat_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>XML</Value>
+          <Value>JSON</Value>
+        </ValueSpace>
+      </Format>
+      <ServerUrl item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_1_2048" type="String" minlength="1" maxlength="2048">
+        <Valuespace>
+          <MaxLength>2048</MaxLength>
+          <MinLength>1</MinLength>
+        </Valuespace>
+      </ServerUrl>
+    </Register>
+  </HttpFeedback>
+  <Peripherals read="Admin;Integrator;RoomControl;User">
+    <Connect command="True" role="Admin;Integrator;RoomControl;User" read="Admin;Integrator;RoomControl;User">
+      <HardwareInfo item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_100" type="String" minlength="0" maxlength="100">
+        <Valuespace>
+          <MaxLength>100</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </HardwareInfo>
+      <ID item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_1_100" type="String" minlength="1" maxlength="100">
+        <Valuespace>
+          <MaxLength>100</MaxLength>
+          <MinLength>1</MinLength>
+        </Valuespace>
+      </ID>
+      <Name item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_100" type="String" minlength="0" maxlength="100">
+        <Valuespace>
+          <MaxLength>100</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </Name>
+      <NetworkAddress item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_100" type="String" minlength="0" maxlength="100">
+        <Valuespace>
+          <MaxLength>100</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </NetworkAddress>
+      <SerialNumber item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_100" type="String" minlength="0" maxlength="100">
+        <Valuespace>
+          <MaxLength>100</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </SerialNumber>
+      <SoftwareInfo item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_100" type="String" minlength="0" maxlength="100">
+        <Valuespace>
+          <MaxLength>100</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </SoftwareInfo>
+      <Type item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_DeviceType_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Byod</Value>
+          <Value>ControlSystem</Value>
+          <Value>Other</Value>
+          <Value>TouchPanel</Value>
+        </ValueSpace>
+      </Type>
+    </Connect>
+    <HeartBeat command="True" role="Admin;RoomControl;User" read="Admin;RoomControl;User">
+      <ID item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_1_100" type="String" minlength="1" maxlength="100">
+        <Valuespace>
+          <MaxLength>100</MaxLength>
+          <MinLength>1</MinLength>
+        </Valuespace>
+      </ID>
+      <Timeout item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_65535" type="Integer" min="1" max="65535">
+        <Valuespace>
+          <Max>65535</Max>
+          <Min>1</Min>
+        </Valuespace>
+      </Timeout>
+    </HeartBeat>
+    <List command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl">
+      <Connected item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_TrueFalse_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>False</Value>
+          <Value>True</Value>
+        </ValueSpace>
+      </Connected>
+      <Type item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_AllPairingDevices_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>All</Value>
+          <Value>ControlSystem</Value>
+          <Value>ISDNLink</Value>
+          <Value>Other</Value>
+          <Value>TouchPanel</Value>
+        </ValueSpace>
+      </Type>
+    </List>
+    <Pairing read="Admin;User">
+      <DeviceDiscovery read="Admin">
+        <Start command="True" role="Admin" read="Admin">
+          <AutoPairing item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_OnOff_1" type="Literal">
+            <ValueSpace type="Literal">
+              <Value>On</Value>
+              <Value>Off</Value>
+            </ValueSpace>
+          </AutoPairing>
+          <DeviceType item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PairingDeviceType_1" type="Literal">
+            <ValueSpace type="Literal">
+              <Value>ISDNLink</Value>
+            </ValueSpace>
+          </DeviceType>
+          <Timeout item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_3_60" type="Integer" min="3" max="60">
+            <Valuespace>
+              <Max>60</Max>
+              <Min>3</Min>
+            </Valuespace>
+          </Timeout>
+        </Start>
+      </DeviceDiscovery>
+      <Pair command="True" role="Admin" read="Admin">
+        <MacAddress item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_1_1450" type="String" minlength="1" maxlength="1450">
+          <Valuespace>
+            <MaxLength>1450</MaxLength>
+            <MinLength>1</MinLength>
+          </Valuespace>
+        </MacAddress>
+      </Pair>
+      <Unpair command="True" role="Admin;User" read="Admin;User">
+        <MacAddress item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_1_100" type="String" minlength="1" maxlength="100">
+          <Valuespace>
+            <MaxLength>100</MaxLength>
+            <MinLength>1</MinLength>
+          </Valuespace>
+        </MacAddress>
+      </Unpair>
+    </Pairing>
+    <Purge command="True" role="Admin;User" read="Admin;User">
+      <ID item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_1_100" type="String" minlength="1" maxlength="100">
+        <Valuespace>
+          <MaxLength>100</MaxLength>
+          <MinLength>1</MinLength>
+        </Valuespace>
+      </ID>
+    </Purge>
+  </Peripherals>
+  <Phonebook read="Admin;User">
+    <Contact read="Admin;User">
+      <Add command="True" role="Admin;User" read="Admin;User">
+        <CallRate item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_6000" type="Integer" min="0" max="6000">
+          <Valuespace>
+            <Max>6000</Max>
+            <Min>0</Min>
+          </Valuespace>
+        </CallRate>
+        <CallType item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_CallType_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Audio</Value>
+            <Value>Video</Value>
+          </ValueSpace>
+        </CallType>
+        <Device item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookDeviceType_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Mobile</Value>
+            <Value>Other</Value>
+            <Value>Telephone</Value>
+            <Value>Video</Value>
+          </ValueSpace>
+        </Device>
+        <FolderId item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </FolderId>
+        <ImageURL item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ImageURL>
+        <Name item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </Name>
+        <Number item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </Number>
+        <Protocol item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookCallProtocol_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Auto</Value>
+            <Value>H320</Value>
+            <Value>H323</Value>
+            <Value>SIP</Value>
+            <Value>Spark</Value>
+          </ValueSpace>
+        </Protocol>
+        <Tag item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookTag_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Untagged</Value>
+            <Value>Favorite</Value>
+          </ValueSpace>
+        </Tag>
+        <Title item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </Title>
+      </Add>
+      <Delete command="True" role="Admin;User" read="Admin;User">
+        <ContactId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ContactId>
+      </Delete>
+      <Modify command="True" role="Admin;User" read="Admin;User">
+        <ContactId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ContactId>
+        <FolderId item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </FolderId>
+        <ImageURL item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ImageURL>
+        <Name item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </Name>
+        <Tag item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookTag_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Untagged</Value>
+            <Value>Favorite</Value>
+          </ValueSpace>
+        </Tag>
+        <Title item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </Title>
+      </Modify>
+    </Contact>
+    <ContactMethod read="Admin;User">
+      <Add command="True" role="Admin;User" read="Admin;User">
+        <CallRate item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_6000" type="Integer" min="0" max="6000">
+          <Valuespace>
+            <Max>6000</Max>
+            <Min>0</Min>
+          </Valuespace>
+        </CallRate>
+        <CallType item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_CallType_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Audio</Value>
+            <Value>Video</Value>
+          </ValueSpace>
+        </CallType>
+        <ContactId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ContactId>
+        <Device item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookDeviceType_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Mobile</Value>
+            <Value>Other</Value>
+            <Value>Telephone</Value>
+            <Value>Video</Value>
+          </ValueSpace>
+        </Device>
+        <Number item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </Number>
+        <Protocol item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookCallProtocol_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Auto</Value>
+            <Value>H320</Value>
+            <Value>H323</Value>
+            <Value>SIP</Value>
+            <Value>Spark</Value>
+          </ValueSpace>
+        </Protocol>
+      </Add>
+      <Delete command="True" role="Admin;User" read="Admin;User">
+        <ContactId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ContactId>
+        <ContactMethodId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ContactMethodId>
+      </Delete>
+      <Modify command="True" role="Admin;User" read="Admin;User">
+        <CallRate item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_6000" type="Integer" min="0" max="6000">
+          <Valuespace>
+            <Max>6000</Max>
+            <Min>0</Min>
+          </Valuespace>
+        </CallRate>
+        <CallType item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_CallType_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Audio</Value>
+            <Value>Video</Value>
+          </ValueSpace>
+        </CallType>
+        <ContactId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ContactId>
+        <ContactMethodId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ContactMethodId>
+        <Device item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookDeviceType_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Mobile</Value>
+            <Value>Other</Value>
+            <Value>Telephone</Value>
+            <Value>Video</Value>
+          </ValueSpace>
+        </Device>
+        <Number item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </Number>
+        <Protocol item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookCallProtocol_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Auto</Value>
+            <Value>H320</Value>
+            <Value>H323</Value>
+            <Value>SIP</Value>
+            <Value>Spark</Value>
+          </ValueSpace>
+        </Protocol>
+      </Modify>
+    </ContactMethod>
+    <Folder read="Admin;User">
+      <Add command="True" role="Admin;User" read="Admin;User">
+        <Name item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </Name>
+        <ParentFolderId item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ParentFolderId>
+      </Add>
+      <Delete command="True" role="Admin;User" read="Admin;User">
+        <FolderId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </FolderId>
+      </Delete>
+      <Modify command="True" role="Admin;User" read="Admin;User">
+        <FolderId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </FolderId>
+        <Name item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </Name>
+        <ParentFolderId item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+          <Valuespace>
+            <MaxLength>255</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ParentFolderId>
+      </Modify>
+    </Folder>
+    <Search command="True" role="Admin;User" read="Admin;User">
+      <ContactMethodLimit item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_10" type="Integer" min="0" max="10">
+        <Valuespace>
+          <Max>10</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </ContactMethodLimit>
+      <ContactType item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookContactType_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Any</Value>
+          <Value>Folder</Value>
+          <Value>Contact</Value>
+        </ValueSpace>
+      </ContactType>
+      <FolderId item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+        <Valuespace>
+          <MaxLength>255</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </FolderId>
+      <Limit item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </Limit>
+      <Offset item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </Offset>
+      <PhonebookId item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+        <Valuespace>
+          <MaxLength>255</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </PhonebookId>
+      <PhonebookType item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookType_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Corporate</Value>
+          <Value>Local</Value>
+        </ValueSpace>
+      </PhonebookType>
+      <Recursive item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_TrueFalse_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>False</Value>
+          <Value>True</Value>
+        </ValueSpace>
+      </Recursive>
+      <SearchField item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookSearchField_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Name</Value>
+          <Value>Number</Value>
+        </ValueSpace>
+      </SearchField>
+      <SearchString item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+        <Valuespace>
+          <MaxLength>255</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </SearchString>
+      <Tag item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PhonebookTag_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Untagged</Value>
+          <Value>Favorite</Value>
+        </ValueSpace>
+      </Tag>
+    </Search>
+  </Phonebook>
+  <Presentation read="Admin;User">
+    <Start command="True" role="Admin;User" read="Admin;User">
+      <ConnectorId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_2" type="Integer" min="1" max="2">
+        <Valuespace>
+          <Max>2</Max>
+          <Min>1</Min>
+        </Valuespace>
+      </ConnectorId>
+      <Instance item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PresentInstanceWithNew_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>New</Value>
+          <Value>1</Value>
+          <Value>2</Value>
+          <Value>3</Value>
+          <Value>4</Value>
+          <Value>5</Value>
+          <Value>6</Value>
+        </ValueSpace>
+      </Instance>
+      <PresentationSource item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_2" type="Integer" min="1" max="2">
+        <Valuespace>
+          <Max>2</Max>
+          <Min>1</Min>
+        </Valuespace>
+      </PresentationSource>
+      <SendingMode item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PresentSendingMode_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>LocalRemote</Value>
+          <Value>LocalOnly</Value>
+        </ValueSpace>
+      </SendingMode>
+    </Start>
+    <Stop command="True" role="Admin;User" read="Admin;User">
+      <Instance item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PresentInstance_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>1</Value>
+          <Value>2</Value>
+          <Value>3</Value>
+          <Value>4</Value>
+          <Value>5</Value>
+          <Value>6</Value>
+        </ValueSpace>
+      </Instance>
+      <PresentationSource item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_2" type="Integer" min="1" max="2">
+        <Valuespace>
+          <Max>2</Max>
+          <Min>1</Min>
+        </Valuespace>
+      </PresentationSource>
+    </Stop>
+  </Presentation>
+  <Provisioning read="Admin;User">
+    <CUCM read="Admin;User">
+      <ExtensionMobility read="Admin;User">
+        <Login command="True" role="Admin;User" read="Admin;User">
+          <Pin item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_1_255" type="String" minlength="1" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>1</MinLength>
+            </Valuespace>
+          </Pin>
+          <Profile item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_1_255" type="String" minlength="1" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>1</MinLength>
+            </Valuespace>
+          </Profile>
+          <UserId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_1_255" type="String" minlength="1" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>1</MinLength>
+            </Valuespace>
+          </UserId>
+        </Login>
+        <Logout command="True" role="Admin;User" read="Admin;User"/>
+      </ExtensionMobility>
+    </CUCM>
+    <CompleteUpgrade command="True" role="Admin;User" read="Admin;User"/>
+    <PostponeUpgrade command="True" role="Admin;User" read="Admin;User">
+      <SecondsToPostpone item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_0_65534" type="Integer" min="0" max="65534">
+        <Valuespace>
+          <Max>65534</Max>
+          <Min>0</Min>
+        </Valuespace>
+      </SecondsToPostpone>
+    </PostponeUpgrade>
+    <StartUpgrade command="True" role="Admin;User" read="Admin;User"/>
+  </Provisioning>
+  <Proximity read="Admin;User">
+    <Services read="Admin;User">
+      <Activate command="True" role="Admin;User" read="Admin;User"/>
+      <Deactivate command="True" role="Admin;User" read="Admin;User"/>
+    </Services>
+  </Proximity>
+  <Security read="Admin;User">
+    <Certificates read="Admin;User">
+      <CUCM read="Admin;User">
+        <MIC/>
+      </CUCM>
+    </Certificates>
+    <Persistency command="True" role="Admin" read="Admin">
+      <CallHistory item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_PersistencySetting_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>NonPersistent</Value>
+          <Value>Persistent</Value>
+        </ValueSpace>
+      </CallHistory>
+      <Configurations item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_PersistencySetting_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>NonPersistent</Value>
+          <Value>Persistent</Value>
+        </ValueSpace>
+      </Configurations>
+      <ConfirmAndReboot item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_Confirm_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Yes</Value>
+        </ValueSpace>
+      </ConfirmAndReboot>
+      <DHCP item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_PersistencySetting_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>NonPersistent</Value>
+          <Value>Persistent</Value>
+        </ValueSpace>
+      </DHCP>
+      <InternalLogging item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_PersistencySetting_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>NonPersistent</Value>
+          <Value>Persistent</Value>
+        </ValueSpace>
+      </InternalLogging>
+      <LocalPhonebook item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_PersistencySetting_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>NonPersistent</Value>
+          <Value>Persistent</Value>
+        </ValueSpace>
+      </LocalPhonebook>
+    </Persistency>
+    <Session read="Admin">
+      <List command="True" role="Admin" read="Admin"/>
+      <Terminate command="True" role="Admin" read="Admin">
+        <SessionId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_32" type="String" minlength="0" maxlength="32">
+          <Valuespace>
+            <MaxLength>32</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </SessionId>
+      </Terminate>
+    </Session>
+  </Security>
+  <Standby read="Admin;Integrator;User">
+    <Activate command="True" role="Admin;Integrator;User" read="Admin;Integrator;User"/>
+    <Deactivate command="True" role="Admin;Integrator;User" read="Admin;Integrator;User"/>
+    <ResetTimer command="True" role="Admin;User" read="Admin;User">
+      <Delay item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_1_480" type="Integer" min="1" max="480">
+        <Valuespace>
+          <Max>480</Max>
+          <Min>1</Min>
+        </Valuespace>
+      </Delay>
+    </ResetTimer>
+  </Standby>
+  <SystemUnit read="Admin;Integrator;User">
+    <Boot command="True" role="Integrator;User" read="Integrator;User">
+      <Action item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_BootAction_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>Restart</Value>
+          <Value>Shutdown</Value>
+        </ValueSpace>
+      </Action>
+    </Boot>
+    <FactoryReset command="True" role="Admin;User" read="Admin;User">
+      <Confirm item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_Confirm_1" type="Literal" completable="False">
+        <ValueSpace type="Literal">
+          <Value>Yes</Value>
+        </ValueSpace>
+      </Confirm>
+      <Keep item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_KeepActions_1_6" type="Literal" multiple="6">
+        <ValueSpace type="Literal">
+          <Value>LocalSetup</Value>
+          <Value>Network</Value>
+          <Value>Spark</Value>
+          <Value>Provisioning</Value>
+          <Value>SerialPort</Value>
+          <Value>Certificates</Value>
+        </ValueSpace>
+      </Keep>
+      <TrailingAction item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_TrailingAction_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>NoAction</Value>
+          <Value>Restart</Value>
+          <Value>Shutdown</Value>
+        </ValueSpace>
+      </TrailingAction>
+    </FactoryReset>
+    <FirstTimeWizard read="Integrator;User">
+      <Stop command="True" role="Integrator;User" read="Integrator;User"/>
+    </FirstTimeWizard>
+    <Notifications read="Admin">
+      <RemoveAll command="True" role="Admin" read="Admin"/>
+    </Notifications>
+    <OptionKey read="Admin">
+      <Add command="True" role="Admin" read="Admin">
+        <Key item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_16_24" type="String" minlength="16" maxlength="24">
+          <Valuespace>
+            <MaxLength>24</MaxLength>
+            <MinLength>16</MinLength>
+          </Valuespace>
+        </Key>
+      </Add>
+      <List command="True" role="Admin" read="Admin"/>
+      <Remove command="True" role="Admin" read="Admin">
+        <Type item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_OptionKeysNoMultisiteNoEncryption_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>RemoteMonitoring</Value>
+          </ValueSpace>
+        </Type>
+      </Remove>
+      <RemoveAll command="True" role="Admin" read="Admin">
+        <Confirm item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_Confirm_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Yes</Value>
+          </ValueSpace>
+        </Confirm>
+      </RemoveAll>
+    </OptionKey>
+    <SignInBanner read="Admin;User">
+      <Clear command="True" role="Admin" read="Admin"/>
+      <Get command="True" role="Admin;User" read="Admin;User"/>
+      <Set command="True" multiline="True" role="Admin" read="Admin"/>
+    </SignInBanner>
+    <SoftReset command="True" role="Admin;User" read="Admin;User">
+      <Confirm item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_Confirm_1" type="Literal" completable="False">
+        <ValueSpace type="Literal">
+          <Value>Yes</Value>
+        </ValueSpace>
+      </Confirm>
+    </SoftReset>
+    <SoftwareUpgrade command="True" role="Admin;User" read="Admin;User">
+      <Forced item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_TrueFalse_1" type="Literal">
+        <ValueSpace type="Literal">
+          <Value>False</Value>
+          <Value>True</Value>
+        </ValueSpace>
+      </Forced>
+      <Password item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+        <Valuespace>
+          <MaxLength>255</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </Password>
+      <URL item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+        <Valuespace>
+          <MaxLength>255</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </URL>
+      <UserName item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+        <Valuespace>
+          <MaxLength>255</MaxLength>
+          <MinLength>0</MinLength>
+        </Valuespace>
+      </UserName>
+    </SoftwareUpgrade>
+  </SystemUnit>
+  <Time read="Admin;User">
+    <DateTime read="Admin;User">
+      <Get command="True" role="Admin;User" read="Admin;User"/>
+      <Set command="True" role="Admin;User" read="Admin;User">
+        <Day item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_31" type="Integer" min="1" max="31">
+          <Valuespace>
+            <Max>31</Max>
+            <Min>1</Min>
+          </Valuespace>
+        </Day>
+        <Hour item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_23" type="Integer" min="0" max="23">
+          <Valuespace>
+            <Max>23</Max>
+            <Min>0</Min>
+          </Valuespace>
+        </Hour>
+        <Minute item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_59" type="Integer" min="0" max="59">
+          <Valuespace>
+            <Max>59</Max>
+            <Min>0</Min>
+          </Valuespace>
+        </Minute>
+        <Month item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_12" type="Integer" min="1" max="12">
+          <Valuespace>
+            <Max>12</Max>
+            <Min>1</Min>
+          </Valuespace>
+        </Month>
+        <Second item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_59" type="Integer" min="0" max="59">
+          <Valuespace>
+            <Max>59</Max>
+            <Min>0</Min>
+          </Valuespace>
+        </Second>
+        <Year item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_2015_2037" type="Integer" min="2015" max="2037">
+          <Valuespace>
+            <Max>2037</Max>
+            <Min>2015</Min>
+          </Valuespace>
+        </Year>
+      </Set>
+    </DateTime>
+  </Time>
+  <UserInterface read="Admin;Integrator;RoomControl;User">
+    <Extensions read="Admin;Integrator;RoomControl;User">
+      <Clear command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl"/>
+      <List command="True" role="Integrator;RoomControl;User" read="Integrator;RoomControl;User"/>
+      <Set command="True" multiline="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl">
+        <ConfigId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_40" type="String" minlength="0" maxlength="40">
+          <Valuespace>
+            <MaxLength>40</MaxLength>
+            <MinLength>0</MinLength>
+          </Valuespace>
+        </ConfigId>
+      </Set>
+      <Widget read="Admin;Integrator;RoomControl;User">
+        <SetValue command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl">
+          <Value item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Value>
+          <WidgetId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_40" type="String" minlength="0" maxlength="40">
+            <Valuespace>
+              <MaxLength>40</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </WidgetId>
+        </SetValue>
+        <UnsetValue command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl">
+          <WidgetId item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_40" type="String" minlength="0" maxlength="40">
+            <Valuespace>
+              <MaxLength>40</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </WidgetId>
+        </UnsetValue>
+      </Widget>
+    </Extensions>
+    <Message read="Admin;Integrator;RoomControl;User">
+      <Alert read="Admin;Integrator;RoomControl;User">
+        <Clear command="True" role="Admin;Integrator;RoomControl;User" read="Admin;Integrator;RoomControl;User"/>
+        <Display command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl">
+          <Duration item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_3600" type="Integer" min="0" max="3600">
+            <Valuespace>
+              <Max>3600</Max>
+              <Min>0</Min>
+            </Valuespace>
+          </Duration>
+          <Text item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Text>
+          <Title item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Title>
+        </Display>
+      </Alert>
+      <Prompt read="Admin;Integrator;RoomControl;User">
+        <Clear command="True" role="Admin;Integrator;RoomControl;User" read="Admin;Integrator;RoomControl;User">
+          <FeedbackId item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </FeedbackId>
+        </Clear>
+        <Display command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl">
+          <FeedbackId item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </FeedbackId>
+          <Option.1 item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Option.1>
+          <Option.2 item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Option.2>
+          <Option.3 item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Option.3>
+          <Option.4 item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Option.4>
+          <Option.5 item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Option.5>
+          <Text item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Text>
+          <Title item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Title>
+        </Display>
+        <Response command="True" role="Admin;Integrator;RoomControl;User" read="Admin;Integrator;RoomControl;User">
+          <FeedbackId item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </FeedbackId>
+          <OptionId item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_1_5" type="Integer" min="1" max="5">
+            <Valuespace>
+              <Max>5</Max>
+              <Min>1</Min>
+            </Valuespace>
+          </OptionId>
+        </Response>
+      </Prompt>
+      <TextLine read="Admin;Integrator;RoomControl;User">
+        <Clear command="True" role="Admin;Integrator;RoomControl;User" read="Admin;Integrator;RoomControl;User"/>
+        <Display command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl">
+          <Duration item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_0_3600" type="Integer" min="0" max="3600">
+            <Valuespace>
+              <Max>3600</Max>
+              <Min>0</Min>
+            </Valuespace>
+          </Duration>
+          <Text item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_140" type="String" minlength="0" maxlength="140">
+            <Valuespace>
+              <MaxLength>140</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Text>
+          <X item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_10000" type="Integer" min="1" max="10000">
+            <Valuespace>
+              <Max>10000</Max>
+              <Min>1</Min>
+            </Valuespace>
+          </X>
+          <Y item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_10000" type="Integer" min="1" max="10000">
+            <Valuespace>
+              <Max>10000</Max>
+              <Min>1</Min>
+            </Valuespace>
+          </Y>
+        </Display>
+      </TextLine>
+    </Message>
+    <OSD read="Admin;User">
+      <Key read="Admin">
+        <Click command="True" role="Admin" read="Admin">
+          <Key item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_Key_1" type="Literal">
+            <ValueSpace type="Literal">
+              <Value>0</Value>
+              <Value>1</Value>
+              <Value>2</Value>
+              <Value>3</Value>
+              <Value>4</Value>
+              <Value>5</Value>
+              <Value>6</Value>
+              <Value>7</Value>
+              <Value>8</Value>
+              <Value>9</Value>
+              <Value>C</Value>
+              <Value>Call</Value>
+              <Value>Disconnect</Value>
+              <Value>Down</Value>
+              <Value>F1</Value>
+              <Value>F2</Value>
+              <Value>F3</Value>
+              <Value>F4</Value>
+              <Value>F5</Value>
+              <Value>Grab</Value>
+              <Value>Home</Value>
+              <Value>Layout</Value>
+              <Value>Left</Value>
+              <Value>Mute</Value>
+              <Value>MuteMic</Value>
+              <Value>Ok</Value>
+              <Value>PhoneBook</Value>
+              <Value>Presentation</Value>
+              <Value>Right</Value>
+              <Value>Selfview</Value>
+              <Value>Square</Value>
+              <Value>SrcAux</Value>
+              <Value>SrcCamera</Value>
+              <Value>SrcDocCam</Value>
+              <Value>SrcPc</Value>
+              <Value>SrcVcr</Value>
+              <Value>Star</Value>
+              <Value>Up</Value>
+              <Value>VolumeDown</Value>
+              <Value>VolumeUp</Value>
+              <Value>ZoomIn</Value>
+              <Value>ZoomOut</Value>
+              <Value>+</Value>
+              <Value>-</Value>
+            </ValueSpace>
+          </Key>
+        </Click>
+        <Press command="True" role="Admin" read="Admin">
+          <Key item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_Key_1" type="Literal">
+            <ValueSpace type="Literal">
+              <Value>0</Value>
+              <Value>1</Value>
+              <Value>2</Value>
+              <Value>3</Value>
+              <Value>4</Value>
+              <Value>5</Value>
+              <Value>6</Value>
+              <Value>7</Value>
+              <Value>8</Value>
+              <Value>9</Value>
+              <Value>C</Value>
+              <Value>Call</Value>
+              <Value>Disconnect</Value>
+              <Value>Down</Value>
+              <Value>F1</Value>
+              <Value>F2</Value>
+              <Value>F3</Value>
+              <Value>F4</Value>
+              <Value>F5</Value>
+              <Value>Grab</Value>
+              <Value>Home</Value>
+              <Value>Layout</Value>
+              <Value>Left</Value>
+              <Value>Mute</Value>
+              <Value>MuteMic</Value>
+              <Value>Ok</Value>
+              <Value>PhoneBook</Value>
+              <Value>Presentation</Value>
+              <Value>Right</Value>
+              <Value>Selfview</Value>
+              <Value>Square</Value>
+              <Value>SrcAux</Value>
+              <Value>SrcCamera</Value>
+              <Value>SrcDocCam</Value>
+              <Value>SrcPc</Value>
+              <Value>SrcVcr</Value>
+              <Value>Star</Value>
+              <Value>Up</Value>
+              <Value>VolumeDown</Value>
+              <Value>VolumeUp</Value>
+              <Value>ZoomIn</Value>
+              <Value>ZoomOut</Value>
+              <Value>+</Value>
+              <Value>-</Value>
+            </ValueSpace>
+          </Key>
+        </Press>
+        <Release command="True" role="Admin" read="Admin">
+          <Key item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_Key_1" type="Literal">
+            <ValueSpace type="Literal">
+              <Value>0</Value>
+              <Value>1</Value>
+              <Value>2</Value>
+              <Value>3</Value>
+              <Value>4</Value>
+              <Value>5</Value>
+              <Value>6</Value>
+              <Value>7</Value>
+              <Value>8</Value>
+              <Value>9</Value>
+              <Value>C</Value>
+              <Value>Call</Value>
+              <Value>Disconnect</Value>
+              <Value>Down</Value>
+              <Value>F1</Value>
+              <Value>F2</Value>
+              <Value>F3</Value>
+              <Value>F4</Value>
+              <Value>F5</Value>
+              <Value>Grab</Value>
+              <Value>Home</Value>
+              <Value>Layout</Value>
+              <Value>Left</Value>
+              <Value>Mute</Value>
+              <Value>MuteMic</Value>
+              <Value>Ok</Value>
+              <Value>PhoneBook</Value>
+              <Value>Presentation</Value>
+              <Value>Right</Value>
+              <Value>Selfview</Value>
+              <Value>Square</Value>
+              <Value>SrcAux</Value>
+              <Value>SrcCamera</Value>
+              <Value>SrcDocCam</Value>
+              <Value>SrcPc</Value>
+              <Value>SrcVcr</Value>
+              <Value>Star</Value>
+              <Value>Up</Value>
+              <Value>VolumeDown</Value>
+              <Value>VolumeUp</Value>
+              <Value>ZoomIn</Value>
+              <Value>ZoomOut</Value>
+              <Value>+</Value>
+              <Value>-</Value>
+            </ValueSpace>
+          </Key>
+        </Release>
+      </Key>
+    </OSD>
+    <Presentation read="Admin;Integrator;RoomControl;User">
+      <ExternalSource read="Admin;Integrator;RoomControl;User">
+        <Add command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl">
+          <ConnectorId item="1" required="True" valueSpaceRef="/Valuespace/Vs_integer_2_2" type="Integer" min="2" max="2">
+            <Valuespace>
+              <Max>2</Max>
+              <Min>2</Min>
+            </Valuespace>
+          </ConnectorId>
+          <Name item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_40" type="String" minlength="0" maxlength="40">
+            <Valuespace>
+              <MaxLength>40</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Name>
+          <SourceIdentifier item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_40" type="String" minlength="0" maxlength="40">
+            <Valuespace>
+              <MaxLength>40</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </SourceIdentifier>
+          <Type item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_VideoInputSourceType_1" type="Literal">
+            <ValueSpace type="Literal">
+              <Value>camera</Value>
+              <Value>PC</Value>
+              <Value>mediaplayer</Value>
+              <Value>document_camera</Value>
+              <Value>other</Value>
+              <Value>whiteboard</Value>
+              <Value>desktop</Value>
+            </ValueSpace>
+          </Type>
+        </Add>
+        <List command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl"/>
+        <Remove command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl">
+          <SourceIdentifier item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_40" type="String" minlength="0" maxlength="40">
+            <Valuespace>
+              <MaxLength>40</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </SourceIdentifier>
+        </Remove>
+        <RemoveAll command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl"/>
+        <Select command="True" role="Admin;Integrator;RoomControl;User" read="Admin;Integrator;RoomControl;User">
+          <SourceIdentifier item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_40" type="String" minlength="0" maxlength="40">
+            <Valuespace>
+              <MaxLength>40</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </SourceIdentifier>
+        </Select>
+        <State read="Admin;Integrator;RoomControl">
+          <Set command="True" role="Admin;Integrator;RoomControl" read="Admin;Integrator;RoomControl">
+            <ErrorReason item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_80" type="String" minlength="0" maxlength="80">
+              <Valuespace>
+                <MaxLength>80</MaxLength>
+                <MinLength>0</MinLength>
+              </Valuespace>
+            </ErrorReason>
+            <SourceIdentifier item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_40" type="String" minlength="0" maxlength="40">
+              <Valuespace>
+                <MaxLength>40</MaxLength>
+                <MinLength>0</MinLength>
+              </Valuespace>
+            </SourceIdentifier>
+            <State item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_ExternalSourceState_1" type="Literal">
+              <ValueSpace type="Literal">
+                <Value>Hidden</Value>
+                <Value>Ready</Value>
+                <Value>NotReady</Value>
+                <Value>Error</Value>
+              </ValueSpace>
+            </State>
+          </Set>
+        </State>
+      </ExternalSource>
+    </Presentation>
+  </UserInterface>
+  <UserManagement read="Admin;Audit;Integrator;RoomControl;User">
+    <RemoteSupportUser read="Admin">
+      <Create command="True" role="Admin" read="Admin">
+        <ExpiryDays item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_31" type="Integer" min="1" max="31">
+          <Valuespace>
+            <Max>31</Max>
+            <Min>1</Min>
+          </Valuespace>
+        </ExpiryDays>
+      </Create>
+      <Delete command="True" role="Admin" read="Admin"/>
+      <DisablePermanently command="True" role="Admin" read="Admin">
+        <Confirm item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_Confirm_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Yes</Value>
+          </ValueSpace>
+        </Confirm>
+      </DisablePermanently>
+      <GetState command="True" role="Admin" read="Admin"/>
+    </RemoteSupportUser>
+    <User read="Admin;Audit;Integrator;RoomControl;User">
+      <Passphrase read="Admin;Audit;Integrator;RoomControl;User">
+        <Change command="True" role="Admin;Audit;Integrator;RoomControl;User" read="Admin;Audit;Integrator;RoomControl;User">
+          <NewPassphrase item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </NewPassphrase>
+          <OldPassphrase item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </OldPassphrase>
+        </Change>
+        <Set command="True" role="Admin" read="Admin">
+          <NewPassphrase item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </NewPassphrase>
+          <Username item="1" required="True" valueSpaceRef="/Valuespace/Vs_string_0_127" type="String" minlength="0" maxlength="127">
+            <Valuespace>
+              <MaxLength>127</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </Username>
+          <YourPassphrase item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_255" type="String" minlength="0" maxlength="255">
+            <Valuespace>
+              <MaxLength>255</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </YourPassphrase>
+        </Set>
+      </Passphrase>
+    </User>
+  </UserManagement>
+  <Video read="Admin;Integrator;User">
+    <ActiveSpeakerPIP read="Admin;User">
+      <Set command="True" role="Admin;User" read="Admin;User">
+        <Position item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_PipPosition_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>CenterLeft</Value>
+            <Value>CenterRight</Value>
+            <Value>LowerLeft</Value>
+            <Value>LowerRight</Value>
+            <Value>UpperCenter</Value>
+            <Value>UpperLeft</Value>
+            <Value>UpperRight</Value>
+          </ValueSpace>
+        </Position>
+      </Set>
+    </ActiveSpeakerPIP>
+    <CEC/>
+    <Input read="Integrator;User">
+      <SetMainVideoSource command="True" role="Integrator;User" read="Integrator;User">
+        <ConnectorId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_2" type="Integer" min="1" max="2">
+          <Valuespace>
+            <Max>2</Max>
+            <Min>1</Min>
+          </Valuespace>
+        </ConnectorId>
+        <SourceId item="1" required="False" valueSpaceRef="/Valuespace/Vs_integer_1_2" type="Integer" min="1" max="2">
+          <Valuespace>
+            <Max>2</Max>
+            <Min>1</Min>
+          </Valuespace>
+        </SourceId>
+      </SetMainVideoSource>
+    </Input>
+    <Layout read="Admin;User">
+      <LayoutFamily read="Admin;User">
+        <Set command="True" role="Admin;User" read="Admin;User">
+          <CustomLayoutName item="1" required="False" valueSpaceRef="/Valuespace/Vs_string_0_128" type="String" minlength="0" maxlength="128">
+            <Valuespace>
+              <MaxLength>128</MaxLength>
+              <MinLength>0</MinLength>
+            </Valuespace>
+          </CustomLayoutName>
+          <LayoutFamily item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_LayoutFamily_1" type="Literal">
+            <ValueSpace type="Literal">
+              <Value>auto</Value>
+              <Value>custom</Value>
+              <Value>equal</Value>
+              <Value>overlay</Value>
+              <Value>prominent</Value>
+              <Value>single</Value>
+            </ValueSpace>
+          </LayoutFamily>
+          <Target item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_ConfSpeakerTarget_1" type="Literal">
+            <ValueSpace type="Literal">
+              <Value>Local</Value>
+              <Value>Remote</Value>
+            </ValueSpace>
+          </Target>
+        </Set>
+      </LayoutFamily>
+    </Layout>
+    <Output>
+      <Monitor>
+        <Backlight/>
+        <Brightness/>
+        <CSC/>
+        <Color>
+          <Blue/>
+          <Green/>
+          <Red/>
+        </Color>
+        <Contrast/>
+        <Gamma/>
+        <Sharpness/>
+      </Monitor>
+    </Output>
+    <PresentationPIP read="Admin;User">
+      <Set command="True" role="Admin;User" read="Admin;User">
+        <Position item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_PipPosition_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>CenterLeft</Value>
+            <Value>CenterRight</Value>
+            <Value>LowerLeft</Value>
+            <Value>LowerRight</Value>
+            <Value>UpperCenter</Value>
+            <Value>UpperLeft</Value>
+            <Value>UpperRight</Value>
+          </ValueSpace>
+        </Position>
+      </Set>
+    </PresentationPIP>
+    <PresentationView read="Admin;User">
+      <Set command="True" role="Admin;User" read="Admin;User">
+        <View item="1" required="True" valueSpaceRef="/Valuespace/Vs_literal_LayoutViewSize_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>Default</Value>
+            <Value>Maximized</Value>
+            <Value>Minimized</Value>
+          </ValueSpace>
+        </View>
+      </Set>
+    </PresentationView>
+    <Selfview read="Admin;User">
+      <Set command="True" role="Admin;User" read="Admin;User">
+        <FullscreenMode item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_OnOff_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>On</Value>
+            <Value>Off</Value>
+          </ValueSpace>
+        </FullscreenMode>
+        <Mode item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_OnOff_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>On</Value>
+            <Value>Off</Value>
+          </ValueSpace>
+        </Mode>
+        <OnMonitorRole item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_MonitorRole_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>First</Value>
+            <Value>Fourth</Value>
+            <Value>Second</Value>
+            <Value>Third</Value>
+          </ValueSpace>
+        </OnMonitorRole>
+        <PIPPosition item="1" required="False" valueSpaceRef="/Valuespace/Vs_literal_PipPosition_1" type="Literal">
+          <ValueSpace type="Literal">
+            <Value>CenterLeft</Value>
+            <Value>CenterRight</Value>
+            <Value>LowerLeft</Value>
+            <Value>LowerRight</Value>
+            <Value>UpperCenter</Value>
+            <Value>UpperLeft</Value>
+            <Value>UpperRight</Value>
+          </ValueSpace>
+        </PIPPosition>
+      </Set>
+    </Selfview>
+  </Video>
+</Command>

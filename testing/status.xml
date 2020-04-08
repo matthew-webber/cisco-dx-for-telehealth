@@ -292,7 +292,7 @@ Cisco IOS Software, Catalyst L3 Switch Software (CAT3K_CAA-UNIVERSALK9-M), Versi
 <ContactMethod item="1" maxOccurrence="n">
 <Number>29823</Number>
 </ContactMethod>
-<Name>Geddings DX80</Name>
+<Name>PROVIDER-TESTING</Name>
 </ContactInfo>
 <Features>
 <Call>

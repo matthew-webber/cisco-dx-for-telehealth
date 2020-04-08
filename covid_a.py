@@ -23,28 +23,29 @@ if __name__ == '__main__':
     all_data = MockDataDaemon().pull_all_data()
     endpoint_ips = [endpoint['ip'] for endpoint in all_data]
 
-    factory = EndpointFactory(endpoint_ips)  # create factory + pass IPs to queue
-    factory.process_queue()  # sort endpoints into online / offline queues
-    # package = factory.package_endpoints()  # process queues and put into endpoint container
-    # if package.online:
-    #     return package.online[0]
-    # else:
-    #     return package.offline[0]
-    # provisioner = TeleportProvisioner()  # create provisioner to outfit endpoints for Teleport work
-    # provisioner.typify(package.online + package.offline)  # add Teleport types / roles to endpoints
+    factory = EndpointFactory(endpoint_ips[:5])
+    factory.process_queue(multiprocessor=True)  # sort endpoints into online / offline queues
+    package = factory.package_endpoints()  # process queues and put into endpoint container
 
+    provisioner = TeleportProvisioner()  # create provisioner to outfit endpoints for Teleport work
+    provisioner.typify(package.online + package.offline)  # add Teleport types / roles to endpoints
 
-    # for ip in endpoint_ips:
-    #     t = threading.Thread(target=imain, args=(ip,))
-    #     t.start()
-    #     # print(ip, type(ip))
-    #     threads.append(t)
-    #
-    #
-    # for thread in threads:
-    #     thread.join()
+    """for pretty printing"""
+    lengths = [len(ep.name) for ep in package.online]
+    long_name = max(lengths)
 
-    print(f'\nCompleted in {time.perf_counter()} seconds')
+    for endpoint in package.online:  # currently, online providers are the only endpoints that get directives
+        provisioner.add_directives(endpoint)  # add directives depending on role + type
+        favorites = provisioner.define_favorites(endpoint)  # create favorites "to-be-added" to endpoint
+        # print(favorites, f' for {endpoint.name}, {endpoint.type}')
+        if favorites:
+            endpoint.collect_favorites(package.online + package.offline, favorites)
+            print(
+                f"\t{endpoint.name}{'.' * (long_name - len(endpoint.name))}.. ({len(endpoint._favorites)}) favorites, ({len(endpoint.directives)}) directives")
+
+    print(f"\n{len(package.online)} Teleports are locked and loaded!")
+
+    print(f'Main done in {round(time.perf_counter(), 2)}')
 
 '''        
     
@@ -79,20 +80,6 @@ if __name__ == '__main__':
     print("Provisioning endpoints with types/roles...")
     provisioner.typify(package.online + package.offline)  # add Teleport types / roles to endpoints
     print("Provisioning endpoints with directives/favorites...\n")
-
-    """for pretty printing"""
-    lengths = [len(ep.name) for ep in package.online]
-    long_name = max(lengths)
-
-    for endpoint in package.online:  # currently, online providers are the only endpoints that get directives
-        provisioner.add_directives(endpoint)  # add directives depending on role + type
-        favorites = provisioner.define_favorites(endpoint)  # create favorites "to-be-added" to endpoint
-        # print(favorites, f' for {endpoint.name}, {endpoint.type}')
-        if favorites:
-            endpoint.collect_favorites(package.online + package.offline, favorites)
-            print(f"\t{endpoint.name}{'.' * (long_name - len(endpoint.name))}.. ({len(endpoint._favorites)}) favorites, ({len(endpoint.directives)}) directives")
-
-    print(f"\n{len(package.online)} Teleports are locked and loaded!")
 
     myDX = package.online[-1]
 

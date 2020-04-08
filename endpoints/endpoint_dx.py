@@ -44,11 +44,6 @@ class DX(Endpoint):
     def type(self, type_):
         self._type = type_
 
-        # self.set_call_string(self.get_call_string())
-        # print(f'my call string is {self.call_string}')
-        # self.set_device_name(self.get_device_name())
-        # print(f'my name is {self.name}')
-
     def execute_directives(self):
         for directive in self.directives.values():
             directive(self)
