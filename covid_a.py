@@ -20,31 +20,19 @@ if __name__ == '__main__':
     #     '10.33.121.109',  # DX-5C-02
     # ]
 
-    def imain(ip_):
-        factory = EndpointFactory([ip_])  # create factory + pass IPs to queue
-        factory.process_queue()  # sort endpoints into online / offline queues
-        package = factory.package_endpoints()  # process queues and put into endpoint container
-        if package.online:
-            return package.online[0]
-        else:
-            return package.offline[0]
-        # provisioner = TeleportProvisioner()  # create provisioner to outfit endpoints for Teleport work
-        # provisioner.typify(package.online + package.offline)  # add Teleport types / roles to endpoints
+    all_data = MockDataDaemon().pull_all_data()
+    endpoint_ips = [endpoint['ip'] for endpoint in all_data]
 
+    factory = EndpointFactory(endpoint_ips)  # create factory + pass IPs to queue
+    factory.process_queue()  # sort endpoints into online / offline queues
+    # package = factory.package_endpoints()  # process queues and put into endpoint container
+    # if package.online:
+    #     return package.online[0]
+    # else:
+    #     return package.offline[0]
+    # provisioner = TeleportProvisioner()  # create provisioner to outfit endpoints for Teleport work
+    # provisioner.typify(package.online + package.offline)  # add Teleport types / roles to endpoints
 
-
-    pool = ThreadPool()
-
-    pool_results = []
-
-    for ip in endpoint_ips:
-        pool_results.append(pool.apply_async(imain, (ip,)))
-        time.sleep(0.2)
-
-    pool.close()
-    pool.join()
-
-    all_endpoint_data = [result.get() for result in pool_results]
 
     # for ip in endpoint_ips:
     #     t = threading.Thread(target=imain, args=(ip,))

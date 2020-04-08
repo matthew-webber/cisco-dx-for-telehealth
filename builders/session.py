@@ -1,11 +1,14 @@
 import requests
 from urllib3.exceptions import NewConnectionError  # todo is this still needed?
+import os
+from helpers.test_objects import get_status_code
+from creds import endpoint_data
 
 
 class SessionModule:
 
     @staticmethod
-    def create_session(login_data=None, session=None, start_session: bool = True, start_auth_session: bool = True):
+    def create_session(login_data=None, session=None):
 
         session_generator = SessionModule.get_session
         session = session_generator(session=session, login_data=login_data)
@@ -13,8 +16,6 @@ class SessionModule:
 
     @staticmethod
     def get_session(session, login_data):
-
-        online = False
 
         if session and login_data:
             # authorize current session
@@ -29,18 +30,6 @@ class SessionModule:
         else:
             # create new non-auth session
             return RegSession
-
-    def session_generator(self):
-        pass
-
-    def make_authsession(self):
-        pass
-
-    def make_regsession(self):
-        pass
-
-    def apply_credentials(self):
-        pass
 
     def init_session(self):
 
@@ -59,8 +48,9 @@ class SessionModule:
 
         return auth_session
 
-    def update_data(self, target, login_url=None):
-        self.response = self.data_fetcher.fetch_data(target=target, login_url=login_url)  # todo refactor to 'renew_data_fetcher' and 'update_data'
+    # todo refactor to 'renew_data_fetcher' and 'update_data'
+    # def update_data(self, target, login_url=None):
+    #     self.response = self.data_fetcher.fetch_data(target=target, login_url=login_url)
 
 
 class AuthSession:
@@ -144,7 +134,6 @@ class DataFetcher:
     def __init__(self, login_url=None, url=None):
         self._login_url = login_url
         self._url = url
-        pass
 
     @property
     def login_url(self):
@@ -173,11 +162,21 @@ class DataFetcher:
     def fetch_data(self, session):
 
         # print(f'Fetching data from {self.url}')
-        try:
-            return session.get(self.url, timeout=2).status_code
-        except requests.ReadTimeout:
-            return 401
-        except requests.exceptions.ConnectTimeout:
-            return 'FAILED_CONNECTION'
-        except ConnectionRefusedError:
-            return 'REFUSED_CONNECTION'
+        if os.environ['PROJECT_STATUS'] != 'TESTING':
+            try:
+                return session.get(self.url, timeout=2).status_code
+            except requests.ReadTimeout:
+                return 401
+            except requests.exceptions.ConnectTimeout:
+                return 'FAILED_CONNECTION'
+            except ConnectionRefusedError:
+                return 'REFUSED_CONNECTION'
+
+        else:
+            return get_status_code()
+
+
+if __name__ == '__main__':
+    data = endpoint_data.copy()
+    x = DataFetcher()
+    a = x.fetch_data('this')

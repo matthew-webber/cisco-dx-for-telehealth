@@ -26,11 +26,12 @@ class EndpointFactory:
 
     def process_queue(self, multiprocessor=True):
         """Puts each IP address in the factory queue through the factory sorter"""
+
+        print("Determining network status of endpoints...")
         if multiprocessor is True:
             ip_pool = ThreadPool()
             pool_results = list()
 
-            print("Determining network status of endpoints...")
             for ip in self.queue:
                 pool_results.append(ip_pool.apply_async(self.test_endpoints, (ip,)))
                 sleep(0.1)
@@ -40,7 +41,14 @@ class EndpointFactory:
 
             test_results = [pool_result.get() for pool_result in pool_results]
 
-            self.sort_test_results(test_results)
+        else:
+            test_results = list()
+
+            for ip in self.queue:
+                test_results.append(self.test_endpoints(ip))
+
+        self.sort_test_results(test_results)
+
 
     def test_endpoints(self, ip):
         """
@@ -203,9 +211,12 @@ class MockEndpointFactory:
 
 
 if __name__ == '__main__':
-    mock_ips = ['10.33.155.0', '10.33.110.0', '10.33.110.200']
 
-    factory = MockEndpointFactory()
+    all_data = MockDataDaemon().pull_all_data()
+    endpoint_ips = [endpoint['ip'] for endpoint in all_data]
+    # endpoint_ips = ['10.33.155.0', '10.33.110.0', '10.33.110.200']
 
-    a = factory.process_data(mock_ips)
+    factory = EndpointFactory(endpoint_ips)
+
+    factory.process_queue(multiprocessor=True)
 
