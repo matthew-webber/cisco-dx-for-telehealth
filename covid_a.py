@@ -32,9 +32,6 @@ if __name__ == '__main__':
         # provisioner.typify(package.online + package.offline)  # add Teleport types / roles to endpoints
 
 
-    threads = list()
-
-    print("Determining network status of endpoints...")
 
     pool = ThreadPool()
 

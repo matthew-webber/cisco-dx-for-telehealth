@@ -20,24 +20,12 @@ class SessionModule:
             # authorize current session
             return AuthSession(credentials=login_data['credentials'],
                                login_url=login_data['login_url'],
-                               test_url=login_data['test_url']).session
+                               test_url=login_data['test_url'])
         elif login_data:
             # create new auth session
-            session_ = AuthSession(credentials=login_data['credentials'],
+            return AuthSession(credentials=login_data['credentials'],
                                   login_url=login_data['login_url'],
                                   test_url=login_data['test_url'])
-
-            return session_
-            #
-            # # a connection timeout should return None so a mock obj can be created
-            # if session_.online:
-            #     online = True
-            #
-            # if online:
-            #     return session_.session
-            # else:
-            #     return None
-
         else:
             # create new non-auth session
             return RegSession

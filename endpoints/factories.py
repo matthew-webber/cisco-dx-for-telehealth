@@ -5,6 +5,9 @@ from endpoints.endpoint_sx import SX
 from ixml import *
 from endpoints.endpoint_mock import MockEndpoint
 from builders.session import *
+from multiprocessing.pool import ThreadPool
+from time import sleep
+
 
 class EndpointFactory:
 
@@ -16,15 +19,66 @@ class EndpointFactory:
         """
         self.queue = queue  # list of IPs
         self.endpoints_types = {k: [] for k in kwargs.keys()}
-        self.online_queue = list(dict())  # online endpoints need to store pairing session
-        self.offline_queue = list()  # offline endpoints can just be IPs
         self.endpoint_data = endpoint_data.copy()
 
-    def process_queue(self):
-        """Puts each IP address in the factory queue through the factory sorter"""
+        self.online_queue = list(dict())  # queue for online EPs contains IP and AuthSession object
+        self.offline_queue = list()  # queue for offline EPs only need an IP
 
-        for ip in self.queue:
-            self.endpoint_sorter(ip)
+    def process_queue(self, multiprocessor=True):
+        """Puts each IP address in the factory queue through the factory sorter"""
+        if multiprocessor is True:
+            ip_pool = ThreadPool()
+            pool_results = list()
+
+            print("Determining network status of endpoints...")
+            for ip in self.queue:
+                pool_results.append(ip_pool.apply_async(self.test_endpoints, (ip,)))
+                sleep(0.1)
+
+            ip_pool.close()
+            ip_pool.join()
+
+            test_results = [pool_result.get() for pool_result in pool_results]
+
+            self.sort_test_results(test_results)
+
+    def test_endpoints(self, ip):
+        """
+        # todo change the below
+        Determine if an endpoint is online by attempting to get the "ProductPlatform" xml node associated
+        with that endpoint's IP in the "Status" API group.  If it doesn't time out, then the ep is considered
+        online and the IP + session are passed back up to be added to the online queue.  If it does timeout
+        or the connection is refused, the IP is passed to the offline queue.
+
+        :param ip: endpoint IPv4 address
+        # todo change return here
+        :return: nothing -- add data to respective self.queue
+        """
+
+        data_copy = self.endpoint_data.copy()  # create fresh data object for each endpoint
+
+        # grab a session using data added to method
+        data_copy['login_url'] = data_copy['login_url'].replace('$ip', ip)
+        data_copy['test_url'] = data_copy['test_url'].replace('$ip', ip)
+        session = EndpointFactory.add_session(data_copy)
+
+        # print result of endpoint testing
+
+        print_spacer = 17 - len(ip)  # for pretty printing
+        print(f'\t[{ip}]{" " * print_spacer} {session.result_msg}')
+
+        return dict(ip=ip, session=session)
+
+    def sort_test_results(self, test_results):
+
+        for result in test_results:
+            ip = result.get('ip')
+            session = result.get('session')
+
+            if session.online:  # if cart not online, None should be returned as session
+                self.online_queue.append(dict(ip=ip, session=session.session))
+            else:
+                self.offline_queue.append(ip)
 
     def package_endpoints(self, mode="DEFAULT"):
         """
@@ -38,33 +92,6 @@ class EndpointFactory:
         payload = self.endpoint_generator(mode)
 
         return EndpointStorage(payload)
-
-    def endpoint_sorter(self, ip):
-        """
-        # todo change the below
-        Determine if an endpoint is online by attempting to get the "ProductPlatform" xml node associated
-        with that endpoint's IP in the "Status" API group.  If it doesn't time out, then the ep is considered
-        online and the IP + session are passed back up to be added to the online queue.  If it does timeout
-        or the connection is refused, the IP is passed to the offline queue.
-
-        :param ip: endpoint IPv4 address
-        :return: nothing -- add data to respective self.queue
-        """
-        data_copy = self.endpoint_data.copy()  # create fresh data object for each endpoint
-
-        # grab a session using data added to method
-        data_copy['login_url'] = data_copy['login_url'].replace('$ip', ip)
-        data_copy['test_url'] = data_copy['test_url'].replace('$ip', ip)
-        session = EndpointFactory.add_session(data_copy)
-
-        # for pretty printing
-        print_buffer = 17 - len(ip)
-        print(f'\t[{ip}]{" " * print_buffer} {session.result_msg}')
-
-        if session.online:  # if cart not online, None should be returned as session
-            self.online_queue.append(dict(ip=ip, session=session.session))
-        else:
-            self.offline_queue.append(ip)
 
     def endpoint_generator(self, mode):
         """
